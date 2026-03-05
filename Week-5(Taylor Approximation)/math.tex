@@ -1,0 +1,259 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsfonts, amsmath, amssymb, amsthm}
+\usepackage{geometry}
+\usepackage[hidelinks]{hyperref}
+\usepackage[none]{hyphenat}
+\usepackage{setspace}
+\usepackage{float}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{cleveref}
+\usepackage{tikz}
+
+\geometry{a4paper, left=1in, top=1in, right=1in, bottom=1in}
+\onehalfspacing
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{example}{Example}[section]
+\theoremstyle{remark}
+\newtheorem*{remark}{\textbf{Remark}}
+
+\newcommand{\e}{\varepsilon}
+\newcommand{\st}{\text{ such that }}
+
+\hyphenpenalty=10000
+\exhyphenpenalty=10000
+
+\title{\textbf{\Large The Anatomy of Approximation: \\ \large Taylor's Theorem and Its Four Remainder Forms}}
+\author{\textbf{Tushar Kumar Aich} \\
+\small{Department of Mathematics, Tinsukia College}
+}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Taylor's theorem is a powerful tool in mathematical analysis that allows us to approximate functions using polynomials. The transition from computational calculus to rigorous real analysis requires us to think not only about the approximating functions but also about bounding the error of these approximations. In this paper we will discuss about the construction of Taylor Polynomials and rigorously develop the integral form of remainder along with the generalized Sch\"{o}lmilch-Roche and see how the specialized Lagrange and Cauchy form of remainders emerge from the Sch\"{o}lmilch-Roche form. We will delve into the derivation of each form, their applications, and how they provide insights into the behavior of functions near a given point.
+\end{abstract}
+
+\section{Introduction}
+The Fundamental Theorem of Calculus bridges the gap between the derivative and the integral, providing appropriate rules for analyzing continuous change. But, when dealing with complex or transcedental functions, getting exact answer is often impossible. So, in those cases we use approximations.
+
+While Taylor Polynomials allow us to approximate an $(n+1)$-times differentiable function $f(x)$ near a point $a$. While it helps us approximate a function but it also has some errors. So, we rigorously bound its error.
+
+\section{Constructing the Taylor Polynomial}
+We start by finding polynomial functions which are close approximations to $f$. In order to guess a polynomial which is appropriate, it is useful to first examine polynomial functions themselves more rigorously.
+
+Let us suppose that,
+\[
+P(x) = a_0 + a_1x + a_2x^2 + \ldots + a_nx^n
+\]
+Here, the coefficients $a_i$ can be expressed in terms of $P$, and its various derivatives at $0$. Thus, 
+\[p(0) = a_0\]
+Differentiating both sides w.r.t $x$, we get
+\[
+P'(x) = 0 + a_1 + 2a_2x + 3a_3x^2 + \ldots + na_nx^{n-1}
+\]
+Therefore,\[P'(0) = P^{(1)}(0) = a_1 = 1! \,a_1\]
+On differentiating again, we get
+\[
+P''(x) = 2a_2 + 3.2a_3x + \ldots + n(n-1)a_nx^{n-2}
+\]
+Similarly,\[P''(0) = P^{(2)}(0) = 2a_2 = 2! \, a_2\]
+Thus, in general we can say, \[P^{(k)}(0) = k! \, a_k\]
+Therefore, \[a_k = \frac{P^{(k)}(0)}{k!}\]
+Hence, we can write $P(x)$ as \[P(x) = \sum_{k = 0}^{n} \frac{P^{(k)}(0)}{k!} \cdot x^k\]
+
+Here, if we started with the function $P$ which was written as a polynomial of the form $(x-a)$,
+\[P(x) = a_0 + a_1(x-a) + a_2(x-a)^2 + \ldots + a_n(x-a)^n\]. Then, a similar argument would imply that \[a_k = \frac{P^{(k)}(a)}{k!}\]
+
+Suppose now that $f$ is a function(not necessarily a polynomial) such that $f^{(1)}(a), \ldots, f^{(n)}(a)$ all exist. Let \[a_k = \frac{f^{(k)}(a)}{k!}, \quad 0 \le k \le n\] and define,
+\[
+P_{n,a}(x) = a_0 + a_1(x-a) + a_2(x-a)^2 + \ldots + a_n(x-a)^n = \sum_{k = 0}^{n} \frac{f^{(k)}(a)}{k!}(x-a)^k
+\]
+The polynomial $P_{n,a}$ is called the \textbf{Taylor polynomial of degree $n$ for $f$ at $a$}.
+
+Here, by the formation of $P_{n,a}(x)$, it matches perfectly with $f(x)$ at $x = a$. But, as $x$ moves away from $a$, the polynomial begins to diverge from the true function $f(x)$. This divergence is the error, or the remainder, defined as the difference between our true function $f(x)$ and our polynomial. We denote this remainder or error as $R_{n,a}(x)$, and is mathematically denoted as \[R_{n,a}(x) = f(x) - P_{n,a}(x)\]
+
+Now we look into quantifying our remainder.
+
+\section{The Integral Form of the Remainder}
+\begin{theorem}
+    Suppose that $f^{(1)}, \ldots, f^{(n+1)}$ are defined on $[a,x]$ and that $R_{n,a}(x)$ is defined as
+    \[
+    f(x) = \sum_{k = 0}^{n} \frac{f^{(k)}(a)}{k!}(x-a)^k + R_{n,a}(x)
+    \]
+    Then if $f^{(n+1)}$ s integrable on $[a,x]$ then
+    \[
+    R_{n,a}(x) = \int_{a}^{x} \frac{f^{(n+1)}(t)}{n!}(x-t)^n \ dt
+    \]
+\end{theorem}
+
+\begin{proof}
+    For every $t \in [a,x]$, we have
+    \[
+    f(x) = \sum_{k = 0}^{n} \frac{f^{(k)}(t)}{k!}(x-t)^k + R_{n,t}(x)
+    \]
+    Let us denote the remainder as $R_{n,t}(x) = S(t) \ \forall \ t \in [a,x]$. Thus,
+    \[
+    f(x) = \sum_{k = 0}^{n} \frac{f^{(k)}(t)}{k!}(x-t)^k + S(t) \quad \forall \ t \in [a,x]
+    \]
+    Now, differentiating both sides w.r.t '$t$', on the right hand side we get a telescopic sum which upon simplifying, we get
+    \begin{align*}
+        0 &= \frac{f^{(n+1)}(t)}{n!}(x-t)^n + S'(t) \\
+        \implies S'(t) &= -\frac{f^{(n+1)}(t)}{n!}(x-t)^n \tag{1}
+    \end{align*}
+
+    Here, if we define $f(x) = P_{n,a}(x) + R_{n,a}(x)$, where \[P_{n,a}(x) = \sum_{k = 0}^{n} \frac{f^{(k)}(a)}{k!}(x-a)^k\]
+    Then, \[P_{n,x}(x) = f(x)\] Therefore, \[R_{n,x}(x) = f(x) - P_{n,a}(x) = f(x) - f(x) = 0\]
+    Thus, \[S(x) = R_{n,x}(x) = 0\] Similarly, \[S(a) = R_{n,a}(x)\]
+    Since, $f^{(n+1)}$ is integrable on $[a,x]$. Then on integrating both sides of (1) on the interval $[a,x]$, we get
+    \[
+    \int_{a}^{x} S'(t) \ dt = -\int_{a}^{x} \frac{f^{(n+1)}(t)}{n!}(x-t)^n \ dt
+    \]
+    Now, using the second fundamental theorem of calculus on the left hand side, we get
+    \begin{align*}
+        S(x) - S(a) &= -\int_{a}^{x} \frac{f^{(n+1)}(t)}{n!}(x-t)^n \ dt \\
+        0 - R_{n,a}(x) &= -\int_{a}^{x} \frac{f^{(n+1)}(t)}{n!}(x-t)^n \ dt \\
+        R_{n,a}(x) &= \int_{a}^{x} \frac{f^{(n+1)}(t)}{n!}(x-t)^n \ dt \tag{2}
+    \end{align*}
+\end{proof}
+
+\section{The Sch\"{o}lmilch-Roche Form of the Remainder}
+While exact, the integral form is often difficult to evaluate. We can derive a more generalized remainder from the integral form by using the Mean Value Theorem for Definite Integrals.
+
+Let $p > 0$ be a real number. Then we can rewrite the integrand on (2) as,
+\[
+R_{n,a}(x) = \int_{a}^{x} \frac{f^{(n+1)}(t)}{n!}(x-t)^{n-p+1}(x-t)^{p-1} \ dt
+\]
+
+Here, the part $\dfrac{f^{(n+1)}(t)}{n!}(x-t)^{n-p+1}$ is continuous on $[a,x]$, and $(x-t)^{p-1}$ is integrable on $[a,x]$. Also $(x-t)^{p-1}$ does not change sign on the interval $[a,x]$. Thus, by the Generalized First Mea Value Theorem of Integrals, we have some $c \in [a,x]$ such that
+\[
+R_{n,a}(x) = \frac{f^{(n+1)}(c)}{n!}(x-c)^{n-p+1} \int_{a}^{x} (x-t)^{p-1} \ dt \tag{3}
+\]
+Now,
+\begin{align*}
+    \int_{a}^{x} (x-t)^{p-1} \ dt &= \left[-\frac{(x-t)^p}{p}\right]_a^x \\
+    &= \left[\frac{(x-t)^p}{p}\right]_x^a \\
+    \int_{a}^{x} (x-t)^{p-1} \ dt &= \frac{(x-a)^p}{p}
+\end{align*}
+Thus, (3) $\implies$
+\[
+R_{n,a}(x) = \frac{f^{(n+1)}(c)}{n! \ p}(x-c)^{n-p+1}(x-a)^p \tag{4}
+\] which is the Sch\"{o}lmilch-Roche form of the remainder.
+
+The importance of the Sch\"{o}lmilch-Roche form of the remainder is that the two most famous remainder forms are merely special cases, dependent entirely on our choice of $p$.
+
+\subsection{Special Cases: Lagrange and Cauchy Forms of the remainder}
+Here, if we set $p = n + 1$ in the equation (4), the terms $(x-c)^{n-p+1}$ reduces to $(x-c)^0 = 1$. The formula simplifies to
+\[
+R_{n,a}(x) = \frac{f^{(n+1)}(c)}{n! \ (n+1)}(x-a)^{n+1} = \frac{f^{(n+1)}(c)}{(n+1)!}(x-a)^{n+1} \tag{5}
+\] which is the Lagrange form of the remainder.
+
+This is the most recognizable remainder, visually matching the next term of the Taylor Sequence.
+
+Again, if we set $p = 1$ in the equation (4). Then the equation becomes
+\[
+R_{n,a}(x) = \frac{f^{(n+1)}(c)}{n!}(x-c)^{n}(x-a) \tag{6}
+\] which is the Cauchy form of the remainder.
+
+While visually less symmetric than the Lagrange's form, the Cauchy form is analytically necessary for series where Lagrange fails.
+
+\section{Applications of the Remainders}
+Here, the goal is to prove that a Taylor series actually converges to its actual function by showing that the remainder goes to zero. Different functions require different remainder forms. Here are three examples of usecases.
+
+\subsection{The Integral Form: Bounding $\ln(1+x)$}
+Consider the Taylor series centered at $a=0$. For $f(x) = \ln(1+x)$, the $(n+1)$-th derivative is\[f^{(n+1)}(t) = \frac{(-1)^nn!}{(1+t)^{n+1}}\]
+
+Substituting this into the Integral form, we get
+\[
+R_{n,0}(x) = (-1)^n \int_0^x \frac{(x-t)^n}{(1+t)^{n+1}} \ dt
+\]
+
+To prove convergence for $x$ between $0$ and $1$, we take the absolute value.
+\[
+\left|R_{n,0}(x)\right| = (-1)^n \int_0^x \left|\frac{x-t}{1+t}\right|^n \frac{1}{1+t} \ dt
+\]
+Here, since $t \in [0, x]$. Therefore, $1+t \ge t$. Hence, $\dfrac{x-t}{1+t} \le x-t \le x$. Therefore, \[\left|R_{n,0}(x)\right| \le \int_0^x x^n \frac{1}{1+t} \ dt = x^n \ln(1+x)\]
+
+For $x$ between 0 and 1, as $n$ goes to $\infty$, the term $x^n$ goes to zero. This drives the exact remainder to zero.
+
+\subsection{The Lagrange Form: Global Convergence of $\sin(x)$}
+When a function's derivatives are uniformly bounded, the Lagrange form is most efficient. Consider $f(x) = \sin(x)$ centered at $a=0$.
+
+The derivative will always be some form of $\pm \sin(x)$ or $\pm \cos(x)$. Therefore, for any real number $c$,\[ |f^{(n+1)}(c)| \le 1\]
+Substituting, this back to the Lagrange form in equation (5), we get
+\[
+|R_{n,0}(x)| \le \frac{|x|^{n+1}}{(n+1)!}
+\]
+Since factorials grow faster than polynomial powers for any fixed real number x,
+\[
+\lim_{n \to \infty} \frac{|x|^{n+1}}{(n+1)!} = 0
+\]Thus, the Lagrange remainder elegantly proves global convergence.
+
+\subsection{The Cauchy Form: When Lagrange Fails}
+To understand why we need the Cauchy form, let us return to $f(x) = \ln(1+x)$, but this time we prove convergence for negative values strictly between $-1$ and $0$.
+
+Using the Lagrange remainder for some point $c$ between $x$ and $0$ (so $-1 < x < c < 0$):
+\begin{equation*}
+    R_{n,0}(x) = \frac{(-1)^n}{n+1} \left(\frac{x}{1+c}\right)^{n+1}
+\end{equation*}
+
+Because $x < c < 0$, it is entirely possible that $1+c < |x|$. If this happens, the fraction inside the parentheses becomes greater than $1$. As $n$ approaches infinity, an exponential term with a base greater than $1$ will diverge. Lagrange simply cannot guarantee convergence here.
+
+We must rely on the Cauchy form:
+\begin{equation*}
+    R_{n,0}(x) = \frac{(-1)^n x}{1+c} \left( \frac{x-c}{1+c} \right)^n
+\end{equation*}
+
+To prove this goes to zero, we must bound the ratio inside the $n$-th power. Since $x < c < 0$, we know $x-c$ is negative and $1+c$ is positive. Taking the absolute value gives:
+\begin{equation*}
+    \left| \frac{x-c}{1+c} \right| = \frac{c-x}{1+c}
+\end{equation*}
+
+We want to show that this fraction is less than or equal to $|x|$ (which is $-x$ since $x$ is negative). We set up the inequality:
+\begin{equation*}
+    \frac{c-x}{1+c} \le -x
+\end{equation*}
+
+Multiplying both sides by the positive term $(1+c)$ gives:
+\begin{align*}
+    c - x &\le -x - cx \\
+    c &\le -cx \\
+    c(1+x) &\le 0
+\end{align*}
+
+Since $c$ is negative and $(1+x)$ is positive, this statement is always true. Therefore, we have rigorously proven that:
+\begin{equation*}
+    \left| \frac{x-c}{1+c} \right| \le |x| < 1
+\end{equation*}
+
+Because this geometric ratio is bounded by a number strictly less than $1$, the entire expression gets crushed to zero as $n$ approaches infinity. The Cauchy form successfully handles the exact interval where the Lagrange form is analytically blind.
+
+\section{Conclusion}
+The transition from computational calculus to rigorous real analysis is defined by a fundamental shift in perspective. We move from merely calculating approximations to strictly bounding their inevitable errors. As we have explored, the Integral form provides an exact foundational error based on the Fundamental Theorem of Calculus. By generalizing this with the Mean Value Theorem for Integrals, the Schölmilch-Roche remainder reveals a profound analytical unity.
+
+This unity proves that seemingly distinct error bounds like Lagrange and Cauchy are not isolated rules to be memorized. Instead, they are derived from the exact same mathematical fabric, dictated entirely by our choice of the parameter $p$. Whether we are utilizing the exactness of the Integral form, the efficiency of Lagrange for well-behaved functions like $\sin(x)$, or the precision of Cauchy for difficult intervals in $\ln(1+x)$, these remainders serve as highly specialized tools. Collectively, they allow us to rigorously verify the full domain of continuous functions, highlighting the elegance and logical structure at the heart of real analysis.
+
+\newpage
+
+\begin{thebibliography}{9}
+
+\bibitem{spivak} 
+Spivak, M. (1994). \textit{Calculus} (3rd ed.). Publish or Perish.
+
+\bibitem{bartle} 
+Bartle, R. G., \& Sherbert, D. R. (2011). \textit{Introduction to Real Analysis} (4th ed.). John Wiley \& Sons.
+
+\bibitem{apostol} 
+Apostol, T. M. (1967). \textit{Calculus, Volume 1: One-Variable Calculus, with an Introduction to Linear Algebra} (2nd ed.). John Wiley \& Sons.
+
+\end{thebibliography}
+\end{document}
