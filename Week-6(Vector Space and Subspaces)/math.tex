@@ -1,0 +1,288 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsfonts, amsmath, amssymb, amsthm}
+\usepackage{geometry}
+\usepackage[hidelinks]{hyperref}
+\usepackage[none]{hyphenat}
+\usepackage{setspace}
+\usepackage{float}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{cleveref}
+\usepackage{tikz}
+
+\geometry{a4paper, left=0.8in, top=1in, right=0.8in, bottom=1in}
+\onehalfspacing
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{example}{Example}[section]
+\theoremstyle{remark}
+\newtheorem*{remark}{\textbf{Remark}}
+\theoremstyle{solution}
+\newtheorem*{solution}{\textbf{Solution}}
+
+\newcommand{\e}{\varepsilon}
+\newcommand{\st}{\text{ such that }}
+
+\hyphenpenalty=10000
+\exhyphenpenalty=10000
+
+\title{\textbf{\Large The Foundations of Linear Algebra \\ \large Defining the Architecture of Vector Spaces and Subspaces}}
+\author{\textbf{Tushar Kumar Aich} \\
+\small{Department of Mathematics, Tinsukia College}
+}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+    Linear Algebra extends far beyond computational matrices and column vectors, and we get to see its truemathematical foundations on the abstract works of vector spaces. In this paper, we discuss the axioms of vector spaces and subspaces, the very foundations of the whole of Linear Algebra. We discuss the axioms, and use them to carry out different theorems rigorously.
+\end{abstract}
+
+\section{Introduction}
+In High School, we often learn "vectors" as something which has a magnitude as well as direction, and visualize them as physical arrows. But here we study a vector space not by what its elements are-whether they are arrows or matrices or anything else-but by how they behave.
+
+\vspace{0.2cm}
+
+This expository paper explores the foundational architecture of linear algebra. We will axiomatically define a vector space over a field $F$. And then, we will study subspaces which are smaller and self-contained.
+
+\section{Vector Spaces}
+\begin{definition}
+    A vector space $V$ over a field $F$ consists of a set on which two operations (addition and scalar multiplication) are defined so that for all $x, y \in V$, there exists a unique $x + y \in V$, and for any $a \in F$ and $v \in V$, there exists a unique $ax \in V$ such that the following conditions holds:
+\end{definition}
+
+\begin{enumerate}[label=(VS \arabic*), leftmargin=0.7in]
+    \item For all $x,y \in V, \ x+y=y+x$ (Commutativity of addition).
+    \item For all $x,y,z \in V, (x+y)+z=x+(y+z)$ (Associativity of addition).
+    \item There exists an element in $V$ denoted by $0$ such that $x+0=x$ for each $x \in V$.
+    \item For each $x \in V$ there exists an element $y \in V$ such that $x+y=0$.
+    \item For each $x \in V$, $1x=x$.
+    \item For any $a,b \in F$ and every $x \in V$, $(ab)x=a(bx)$.
+    \item For any $a \in F$ and every $x,y \in V$, $a(x+y)=ax+ay$.
+    \item For any $a,b \in F$ and every $x \in V$, $(a+b)x=ax+bx$.
+\end{enumerate}
+
+The elements of the field $F$ are called scalars and the elements of the vector space $V$ are called vectors.
+
+\begin{definition}
+    A field $F$ is a set on which addition and multiplication are defined so that for all $x,y \in F$ there exists a unique $x + y$ and $xy$ in $F$ for which the following properties holds:
+\end{definition}
+
+\begin{enumerate}[label=(F \arabic*), leftmargin=0.7in]
+    \item Commutativity of addition and multiplication.
+    \item Associativity of addition and multiplication.
+    \item Existence of additive and multiplicative identity.
+    \item Existence of additive and multiplicative inverse.
+    \item Distributivity of addition and multiplication.
+\end{enumerate}
+
+\begin{example}
+    Set of real numbers $\mathbb{R}$ is a field, but $\mathbb{Z}$ is not a field because multiplicative inverse does not exist for every element in $\mathbb{Z}$.
+\end{example}
+
+An $m \times n$ matrix with entries from a field $F$ is a rectangular array of the form
+\[
+\begin{bmatrix}
+    a_{11} & a_{12} & \dots & a_{1n} \\
+    a_{21} & a_{22} & \dots & a_{2n} \\
+    \vdots & \vdots &  & \vdots \\
+    a_{m1} & a_{m2} & \dots & a_{mn} \\
+\end{bmatrix}
+\]
+where each entry $a_{ij} \ (1 \le i \le m, \ 1 \le j \le n)$ is an element of $F$. We call the entries $a_{ij}$ with $i=j$ the diagonal entries of the matrix. Also two $m \times n$ matrices $A$ and $B$ are equal if all their corresponding entries are equal, \textit{i.e.}, if $A_{ij} = B_{ij} \text{ for } 1 \le i \le m \text{ and } \ 1 \le j \le n$.
+
+\vspace{0.2cm}
+
+The set of all $m \times n$ matrices with entries from a field $F$ is a vector space which we denote by $M_{m \times n}(F)$, with the following operations of matrix addition and scalar multiplication: For $A, B \in M_{m \times n}(F)$ and $c \in F$,
+\[
+(A+B)_{ij} = A_{ij} + B_{ij} \quad \text{and} \quad (cA)_{ij} = cA_{ij}
+\]
+for $1 \le i \le m \text{ and } \ 1 \le j \le n$.
+
+\section{Subspaces}
+\begin{definition}
+    A subset $W$ of a vector space $V$ over a field $F$ is called a subspace of $V$ if and only if the following properties holds:
+\end{definition}
+\begin{enumerate}[label=(SS \arabic*), leftmargin=0.7in]
+    \item $x+y \in W$ whenever $x \in W$ and $y \in W$. ($W$ is closed under addition)
+    \item $cx \in W$ whenever $x \in W$ and $c \in F$. ($W$ is closed under scalar multiplication)
+    \item $W$ has a zero vector.
+\end{enumerate}
+
+\begin{example}
+    Check if $W = \{(a_1, a_2, a_3) \in \mathbb{R}^3 : 2a_1 - 7a_2 + a_3 = 0 \}$ is a subspace of $\mathbb{R}^3$.
+\end{example}
+
+\begin{solution}
+    Let $x = (a_1, a_2, a_3)$ and $y = (b_1, b_2, b_3)$ be two vectors in $W$. Then we have
+    \[
+    2a_1 - 7a_2 + a_3 = 0 \quad \text{and} \quad 2b_1 - 7b_2 + b_3 = 0
+    \]
+    Now, we need to check if $x+y$ is in $W$. We have
+    \[
+    x+y = (a_1 + b_1, a_2 + b_2, a_3 + b_3)
+    \]
+    Now,
+    \[
+    2(a_1 + b_1) - 7(a_2 + b_2) + (a_3 + b_3) = (2a_1 - 7a_2 + a_3) + (2b_1 - 7b_2 + b_3) = 0
+    \]
+    Thus, $x+y$ is in $W$.
+
+    Next, we need to check if $cx$ is in $W$ for any scalar $c$. We have
+    \[
+    cx = (ca_1, ca_2, ca_3)
+    \]
+    Now,
+    \[
+    2(ca_1) - 7(ca_2) + (ca_3) = c(2a_1 - 7a_2 + a_3) = c \cdot 0 = 0
+    \]
+    Thus, $cx$ is in $W$.
+
+    Finally, we need to check if $W$ has a zero vector. The zero vector in $\mathbb{R}^3$ is $(0,0,0)$ and it satisfies the equation $2(0) - 7(0) + (0) = 0$. Thus, the zero vector is in $W$.
+
+    Therefore, $W$ is a subspace of $\mathbb{R}^3$.
+\end{solution}
+
+\begin{theorem}
+    Any intersection of subspaces of a vector space $V$ is a subspace of $V$.
+\end{theorem}
+
+\begin{proof}
+    Let $C$ be a collection of subspaces of $V$ and let $W$ denote the intersection of the subspaces in $C$. Since every subspace contains zero vector, $0 \in W$. Let $a \in F$ and $x, y \in W$. Then $x, y \in C_1 \cap C_2$ for $C_1, C_2 \in C$. Thus, $x, y \in C_1$ and $x, y \in C_2$. Since, $C_1$ and $C_2$ are subspaces. Thus, $x+y \in C_1$ and $x+y \in C_2$, also $ax \in C_1$ and $ax \in C_2$. Therefore, $x+y \in C_1 \cap C_2$ and $ax \in C_1 \cap C_2$. Hence, $x+y \in W$ and $ax \in W$. Therefore, $W$ is a subspace of $V$.
+\end{proof}
+
+Thus we see that the intersection of any collection of subspaces is a subspace. But we often make mistake with the union of subspaces.
+
+\begin{theorem}
+    Let $W_1$ and $W_2$ be subspaces of $V$. Prove $W_1 \cup W_2$ is a subspace of $V$ if and only if $W_1 \subseteq W_2$ or $W_2 \subseteq W_1$.    
+\end{theorem}
+
+\begin{proof}
+    Let $W_1 \cup W_2$ be a subspace. First we assume $W_1 \not\subseteq W_2$ or $W_2 \not\subseteq W_1$. Thus, there exists an $x$ such that $x \in W_1$ but $x \not\in W_2$, also there exists a $y$ such that $y \in W_2$ but $y \not\in W_1$. Therefore, $x, y \in W_1 \cup W_2$. Since, we have assumed $W_1 \cup W_2$ be a subspace then $\forall x, y \in W_1 \cup W_2$, $x+y \in W_1 \cup W_2$. This means that either $x+y \in W_1$ or $x+y \in W_2$.
+
+Now if we assume (1) $x+y \in W_1$ and we also have $x \in W_1$. Since, $W_1$ is a subspace, $x+y - x \in W_1 \Rightarrow y \in W_1$. (2) $x+y \in W_2$, we also have $y \in W_2$. Since, $W_2$ is a subspace, $x+y - y \in W_2 \Rightarrow x \in W_2$.
+
+Both (1) \& (2) contradicts our statement that $W_1 \not\subseteq W_2$ or $W_2 \not\subseteq W_1$.
+
+Hence $W_1 \subseteq W_2$ or $W_2 \subseteq W_1$.
+
+$(\Leftarrow)$ Since, $W_1 \ \& \ W_2$ are subspaces, $0 \in W_1$ and $0 \in W_2$. Thus, $0 \in W_1 \cup W_2$.
+
+Let, $x \in W_1$ and $y \in W_2$ Then $x, y \in W_1 \cup W_2$. Since, $W_1 \subseteq W_2$, $x \in W_1 \subseteq W_2$. then $x \in W_2$. Thus, $x, y \in W_2$ then $x+y \in W_2$. Therefore $x+y \in W_1 \cup W_2$. If we take $W_2 \subseteq W_1$, then $y \in W_1$, and $x, y \in W_1$ then $x+y \in W_1$, and $x+y \in W_1 \cup W_2$. Hence, $x, y \in W_1 \cup W_2$ then $x+y \in W_1 \cup W_2$.
+
+Again, if we take $c \in F$ and $x \in W_1$ then $cx \in W_1$ and $cx \in W_1 \cup W_2$. Also, if $x \in W_2$ then $cx \in W_2$ then $cx \in W_1 \cup W_2$. Thus for $x \in W_1 \cup W_2$, $cx \in W_1 \cup W_2$.
+
+Hence $W_1 \cup W_2$ is a subspace of $V$.
+\end{proof}
+
+Hence, we see that the union of two subspaces is a subspace if and only if one of them is contained in the other. But we can define the sum of two subspaces which is a subspace.
+
+\begin{definition}
+    If $S_1$ and $S_2$ are two non empty sets of vector space $V$, then the set $S_1 + S_2 = \{x+y : x \in S_1, y \in S_2\}$ is called the sum of $S_1$ and $S_2$. 
+\end{definition}
+
+\begin{theorem}
+    Let $W_1$ and $W_2$ be the subspaces of vector space $V$.
+    \begin{enumerate}
+        \item[(a)] Prove that $W_1+W_2$ is a subspace of $V$ that contains both $W_1$ and $W_2$.
+        \item[(b)] Prove that any subspace of $V$ that contains both $W_1$ and $W_2$ must contain $W_1+W_2$.
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    Given, $W_1$ \& $W_2$ are subspaces of $V$. Also from definition we know, 
+\[ W_1+W_2 = \{x+y : x \in W_1 \land y \in W_2\} \]
+
+\textbf{(a)} Proving $W_1+W_2$ is a subspace of $V$:
+
+Since, $0 \in W_1$ and $0 \in W_2$, then by def\textsuperscript{n} $0 \in W_1+W_2$. Now, let $u, v \in W_1+W_2$.
+
+Then, $u = x_1+x_2$ s.t. $x_1 \in W_1$, and $x_2 \in W_2$.
+
+and $v = y_1+y_2$ s.t. $y_1 \in W_1$, and $y_2 \in W_2$.
+
+$\therefore u+v = (x_1+x_2) + (y_1+y_2) = (x_1+y_1) + (x_2+y_2)$.
+
+Now, since $x_1, y_1 \in W_1$ then $x_1+y_1 \in W_1$. Similarly, $x_2+y_2 \in W_2$.
+
+Now, from the def\textsuperscript{n} $(x_1+y_1) + (x_2+y_2) = u+v \in W_1+W_2$.
+
+Again, let $v \in W_1+W_2$ and $c \in F$. Then $v = x+y$ s.t. $x \in W_1$, and $y \in W_2$. By def\textsuperscript{n} of subspaces, $cx \in W_1$, and $cy \in W_2$. Then 
+\[ cv = c(x+y) = cx+cy \in W_1+W_2. \]
+
+Thus, $W_1+W_2$ is a subspace of $V$.
+
+Proving $W_1 \subseteq W_1+W_2$ and $W_2 \subseteq W_1+W_2$:
+
+Let, $x \in W_1$. Then if we take $0 \in W_2$ then $x+0 = x \in W_1+W_2$.
+
+Sly, if $y \in W_2$ then if we take $0 \in W_1$ then $0+y = y \in W_1+W_2$.
+
+Thus, $W_1 \subseteq W_1+W_2$ and $W_2 \subseteq W_1+W_2$.
+
+\vspace{0.5cm}
+
+\textbf{(b)} Let $U$ be any arbitrary subspace of $V$. We need to prove if $W_1 \subseteq U$ and $W_2 \subseteq U$ then $W_1+W_2 \subseteq U$.
+
+Let $v \in W_1+W_2$ then $v = x+y$ s.t $x \in W_1$, and $y \in W_2$. But we have, $W_1 \subseteq U$ and $W_2 \subseteq U$.
+
+Thus, $x, y \in U$. But since we know, $U$ is a subspace then $x+y \in U$ or $v \in U$.
+
+Thus, $W_1+W_2 \subseteq U$.
+\end{proof}
+
+\begin{remark}
+    The sum of two subspaces $W_1$ and $W_2$ is the smallest subspace that contains both $W_1$ and $W_2$. This is a fundamental result in linear algebra, as it allows us to construct new subspaces from existing ones and understand the structure of vector spaces more deeply.
+\end{remark}
+
+\begin{theorem}
+    Prove that if $W$ is a subspace of a vector space $V$ and if $w_1, w_2, \dots, w_n \in W$, then $a_1w_1 + a_2w_2 + \dots + a_nw_n \in W \,\, \forall a_1, a_2, \dots, a_n \in F$.
+\end{theorem}
+
+\begin{proof}
+    (Proof by Mathematical Induction)
+
+\textbf{Base case :}
+
+Since, $W$ is a subspace of $V$ and $w_1 \in W$ and $a_1 \in F$ then $a_1w_1 \in W$. Similarly if $a_2 \in F$ and $w_2 \in W$ then $a_2w_2 \in W$.
+
+Since, $a_1w_1 \in W$ and $a_2w_2 \in W$ then $a_1w_1 + a_2w_2 \in W$.
+
+Thus, $\displaystyle\sum_{i=1}^{k} a_iw_i \in W$ is true for $k=1$ and $k=2$.
+
+\textbf{Arbitrary case :}
+
+Let the statement $\displaystyle\sum_{i=1}^{k} a_iw_i \in W$ be true for any arbitrary $k=m$.
+
+Thus, $\displaystyle\sum_{i=1}^{m} a_iw_i \in W \,\, \forall a_i \in F$ and $w_i \in W$.
+
+Now, let $k=m+1$. Then, $a_{m+1} \in F$ and $w_{m+1} \in W$ then $a_{m+1}w_{m+1} \in W$.
+
+Again, since, $\displaystyle\sum_{i=1}^{m} a_iw_i \in W$ and $a_{m+1}w_{m+1} \in W$ then,
+\[ \displaystyle\sum_{i=1}^{m} a_iw_i + a_{m+1}w_{m+1} = \displaystyle\sum_{i=1}^{m+1} a_iw_i \in W. \]
+
+Thus, our statement is true for $k=m+1$.
+
+Thus, we can say that $\displaystyle\sum_{i=1}^{k} a_iw_i \in W$ is true for any $k=n, \, n \in \mathbb{N}$.
+
+Hence, $a_1w_1 + a_2w_2 + \dots + a_nw_n \in W \,\, \forall n \in \mathbb{N}$.
+\end{proof}
+
+\begin{remark}
+    This result establishes that a subspace is closed under any finite linear combination of its elements, effectively generalizing the closure properties of addition and scalar multiplication.
+\end{remark}
+
+\section{Conclusion}
+In this paper, we have explored the foundational architecture of linear algebra by defining vector spaces and subspaces. We have rigorously proved various theorems related to these concepts, demonstrating the structure and properties of vector spaces and their subspaces. Understanding these fundamental concepts is crucial for further studies in linear algebra and its applications in various fields such as physics, engineering, computer science, and more.
+
+\begin{thebibliography}{9}
+    \bibitem{fis_linear_algebra}
+    Friedberg, S. H., Insel, A. J., \& Spence, L. E. (2018). \textit{Linear Algebra} (5th ed.). Pearson.
+\end{thebibliography}
+\end{document}
