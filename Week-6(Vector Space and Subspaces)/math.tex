@@ -164,7 +164,7 @@ Thus we see that the intersection of any collection of subspaces is a subspace. 
 \end{theorem}
 
 \begin{proof}
-    Let $W_1 \cup W_2$ be a subspace. First we assume $W_1 \not\subseteq W_2$ or $W_2 \not\subseteq W_1$. Thus, there exists an $x$ such that $x \in W_1$ but $x \not\in W_2$, also there exists a $y$ such that $y \in W_2$ but $y \not\in W_1$. Therefore, $x, y \in W_1 \cup W_2$. Since, we have assumed $W_1 \cup W_2$ be a subspace then $\forall x, y \in W_1 \cup W_2$, $x+y \in W_1 \cup W_2$. This means that either $x+y \in W_1$ or $x+y \in W_2$.
+    $(\Rightarrow)$ Let $W_1 \cup W_2$ be a subspace. First we assume $W_1 \not\subseteq W_2$ or $W_2 \not\subseteq W_1$. Thus, there exists an $x$ such that $x \in W_1$ but $x \not\in W_2$, also there exists a $y$ such that $y \in W_2$ but $y \not\in W_1$. Therefore, $x, y \in W_1 \cup W_2$. Since, we have assumed $W_1 \cup W_2$ be a subspace then $\forall x, y \in W_1 \cup W_2$, $x+y \in W_1 \cup W_2$. This means that either $x+y \in W_1$ or $x+y \in W_2$.
 
 Now if we assume (1) $x+y \in W_1$ and we also have $x \in W_1$. Since, $W_1$ is a subspace, $x+y - x \in W_1 \Rightarrow y \in W_1$. (2) $x+y \in W_2$, we also have $y \in W_2$. Since, $W_2$ is a subspace, $x+y - y \in W_2 \Rightarrow x \in W_2$.
 
@@ -201,19 +201,19 @@ Hence, we see that the union of two subspaces is a subspace if and only if one o
 
 \textbf{(a)} Proving $W_1+W_2$ is a subspace of $V$:
 
-Since, $0 \in W_1$ and $0 \in W_2$, then by def\textsuperscript{n} $0 \in W_1+W_2$. Now, let $u, v \in W_1+W_2$.
+Since, $0 \in W_1$ and $0 \in W_2$, then by definition $0 \in W_1+W_2$. Now, let $u, v \in W_1+W_2$.
 
-Then, $u = x_1+x_2$ s.t. $x_1 \in W_1$, and $x_2 \in W_2$.
+Then, $u = x_1+x_2$ such that $x_1 \in W_1$, and $x_2 \in W_2$.
 
-and $v = y_1+y_2$ s.t. $y_1 \in W_1$, and $y_2 \in W_2$.
+and $v = y_1+y_2$ such that $y_1 \in W_1$, and $y_2 \in W_2$.
 
 $\therefore u+v = (x_1+x_2) + (y_1+y_2) = (x_1+y_1) + (x_2+y_2)$.
 
 Now, since $x_1, y_1 \in W_1$ then $x_1+y_1 \in W_1$. Similarly, $x_2+y_2 \in W_2$.
 
-Now, from the def\textsuperscript{n} $(x_1+y_1) + (x_2+y_2) = u+v \in W_1+W_2$.
+Now, from the definition $(x_1+y_1) + (x_2+y_2) = u+v \in W_1+W_2$.
 
-Again, let $v \in W_1+W_2$ and $c \in F$. Then $v = x+y$ s.t. $x \in W_1$, and $y \in W_2$. By def\textsuperscript{n} of subspaces, $cx \in W_1$, and $cy \in W_2$. Then 
+Again, let $v \in W_1+W_2$ and $c \in F$. Then $v = x+y$ such that $x \in W_1$, and $y \in W_2$. By definition of subspaces, $cx \in W_1$, and $cy \in W_2$. Then 
 \[ cv = c(x+y) = cx+cy \in W_1+W_2. \]
 
 Thus, $W_1+W_2$ is a subspace of $V$.
@@ -230,7 +230,7 @@ Thus, $W_1 \subseteq W_1+W_2$ and $W_2 \subseteq W_1+W_2$.
 
 \textbf{(b)} Let $U$ be any arbitrary subspace of $V$. We need to prove if $W_1 \subseteq U$ and $W_2 \subseteq U$ then $W_1+W_2 \subseteq U$.
 
-Let $v \in W_1+W_2$ then $v = x+y$ s.t $x \in W_1$, and $y \in W_2$. But we have, $W_1 \subseteq U$ and $W_2 \subseteq U$.
+Let $v \in W_1+W_2$ then $v = x+y$ such that $x \in W_1$, and $y \in W_2$. But we have, $W_1 \subseteq U$ and $W_2 \subseteq U$.
 
 Thus, $x, y \in U$. But since we know, $U$ is a subspace then $x+y \in U$ or $v \in U$.
 
