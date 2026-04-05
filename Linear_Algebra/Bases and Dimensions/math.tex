@@ -1,0 +1,296 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsfonts, amsmath, amssymb, amsthm}
+\usepackage{geometry}
+\usepackage[hidelinks]{hyperref}
+\usepackage[none]{hyphenat}
+\usepackage{setspace}
+\usepackage{float}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{cleveref}
+\usepackage{tikz}
+\usepackage{mathrsfs}
+
+\geometry{a4paper, left=0.5in, top=0.5in, right=0.5in, bottom=0.7in}
+\onehalfspacing
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{example}{Example}[section]
+\theoremstyle{remark}
+\newtheorem*{remark}{\textbf{Remark}}
+
+\newcommand{\e}{\varepsilon}
+\newcommand{\st}{\text{ such that }}
+\newcommand{\B}{\mathscr{B}}
+\DeclareMathOperator{\Span}{span}
+
+\hyphenpenalty=10000
+\exhyphenpenalty=10000
+
+\title{\textbf{\Large The Architecture of Vector Spaces \\ \large An Analysis of Bases and Dimensions}}
+\author{\textbf{Tushar Kumar Aich} \\ \small{Department of Mathematics, Tinsukia College}}
+\date{\today}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+    Vector spaces and its subspaces builds the foundation for the abstract linear algebra. This paper explores structure of the vector spaces and subspaces through the study of basis and dimensions. By analyzing the span and the linear independence of vectors we see how those vectors generates the skeleton of the vector space.
+\end{abstract}
+
+\section{Prerequisites}
+\subsection{Linear Span}
+\begin{definition}
+    Let $S$ be a nonempty subset of vector space $V$. The span of $S$ denoted as $\Span(S)$, is the set consisting of all linear combinations of the vectors in $S$. For convenience, we define $\Span(\emptyset) = \{0\}$.
+\end{definition}
+
+\begin{theorem}
+    The span of any subset $S$ of a vector space $V$ over a field $F$ is a subspace of $V$. Moreover any subspace of $V$ that contains $S$ must also contain the span of $S$.
+\end{theorem}
+
+\begin{proof}
+    Proving $\Span(S)$ is a subspace of $V$:
+
+    \noindent If $S = \emptyset$, then it is a trivial case as $\Span(S) = \Span(\emptyset) = \{0\}$ which is already a subspace in $V$.
+
+    If $S \ne \emptyset$, then there exists a $z \in S \st 0.z = 0 \in \Span(S)$. Again let $x,y \in S$, then by the definition of $S$,
+    \[
+    x = \sum_{i = 1}^{n} a_iu_i \ \forall \ a_i \in F \ \& \ u_i \in S \quad \text{and} \quad y = \sum_{i = 1}^{n} b_iv_i \ \forall \ b_i \in F \ \& \ v_i \in S
+    \]
+    Then,
+    \[
+    x + y = \sum_{i = 1}^{n} a_iu_i + \sum_{i = 1}^{n} b_iv_i \ \forall \ a_i, b_i \in F \ \& \ u_i, v_i \in S
+    \]
+    which is also a linear combination of vectors in $S$. Thus, $x+y \in \Span(S)$. Again for any $c \in F$, 
+    \[
+    cx = c\left(\sum_{i = 1}^{n} a_iu_i\right) = \sum_{i = 1}^{n} (ca_i)u_i \ \forall \ a_i \in F \ \& \ u_i \in S
+    \]
+    which is also a linear combination of vectors in $S$. Thus, $cx \in \Span(S)$. Hence, $\Span(S)$ is a subspace of $V$.
+
+    Now, let $W$ be any subspace of $V$.
+
+    \noindent Proving if $S \subseteq W$ then $\Span(S) \subseteq W$:
+
+    Let $x \in \Span(S)$. Then by the definition of span,
+    \[
+    x = \sum_{i = 1}^{n} a_iu_i \ \forall \ a_i \in F \ \& \ u_i \in S
+    \]
+    But $u_i \in S \subseteq W$, then $u_i \in W$. Also $W$ is a subspace and we know a linear combination of the vectors of subspace belongs to the subspace. Thus,
+    \[
+    \sum_{i = 1}^{n} a_iu_i \ \forall \ a_i \in F \ \& \ u_i \in S.
+    \]
+    Therefore $x \in W$. Hence $\Span(S) \subseteq W$.
+\end{proof}
+
+\begin{definition}
+    A subset $S$ of a vector space $V$ generates(or spans) $V$ if $\Span(S) = V$. In this case we also say that the vectors of $S$ generate(or span) $V$.
+\end{definition}
+
+\subsection{Linear Dependence and Independence}
+\begin{definition}
+    A subset $S$ of a vector space $V$ is called linearly dependent if there exists a finite number of distinct vectors $u_1, u_2, \ldots, u_n \in S$ and scalars $a_1, a_2, \ldots, a_n$, not all zero such that $$a_1u_1 + a_2u_2 + \ldots + a_nu_n = 0$$.
+\end{definition}
+
+\begin{definition}
+    A subset of a vector space that is not linearly dependent is called linearly independent.
+\end{definition}
+
+Following facts about linearly independent sets are true in any vector space:
+\begin{enumerate}
+    \item Empty sets are linearly independent.
+    \item A set consisting of a single non zero vector is linealry independent.
+    \item A set is linearlt independent if and only if $S$ is a subset of a vector space $V$ over a field $F$ such that whenever
+    \[
+    \sum_{i = 1}^{n} a_iu_i = 0 \ \forall \ a_i \in F \ \& \ u_i \in S
+    \]
+    then $a_1=a_2=\ldots=a_n=0$.
+\end{enumerate}
+
+\begin{theorem}
+    Let $V$ be a vector space over a field $F$, and let $S_1 \subseteq S_2 \subseteq V$. If $S_1$ is linearly dependent then $S_2$ is linearly dependent.
+\end{theorem}
+
+\begin{proof}
+    Since, $S_1$ is linearly dependent, then there exists $w_1, w_2, \dots, w_n \in S_1$ and $a_1, a_2, \dots, a_n \in F$ not all zero such that $\displaystyle\sum_{i=1}^{n} a_i w_i = 0$. But, here $S_1 \subseteq S_2$, then, $w_1, w_2, \dots, w_n \in S_2$. Thus, for $w_1, w_2, \dots, w_n \in S_2$ and $a_1, a_2, \dots, a_n \in F$ not all zero, we have $\displaystyle\sum_{i=1}^{n} a_i w_i = 0$. Hence, $S_2$ is linearly dependent.
+\end{proof}
+
+\begin{corollary}
+    Let $V$ be a vector space over a field $F$, and let $S_1 \subseteq S_2 \subseteq V$. If $S_2$ is linearly independent then $S_1$ is linearly independent.
+\end{corollary}
+
+\begin{proof}
+    Assuming $S_1$ is linearly dependent. Then by Theorem 1, $S_2$ is linearly dependent which contradicts our given statement that $S_2$ is linearly independent. Thus, our assumption is false. Hence, $S_1$ is linearly independent.
+\end{proof}
+
+\begin{theorem}
+    Let $S$ be a linearly independent subset of a vector space $V$ over a field $F$, and let $v \in V$ and $v \notin S$. Then $S \cup \{v\}$ is linearly dependent if and only if $v \in \Span(S)$.
+\end{theorem}
+
+\begin{proof}
+    Assuming $S \cup \{v\}$ is linearly dependent. Then for $w_1, w_2, \dots, w_n \in S \cup \{v\}$, $\displaystyle\sum_{i=1}^{n} a_i w_i = 0$ for $a_1, a_2, \dots, a_n \in F$ and not all zero. Now assuming, $v \notin \{w_1, w_2, \dots, w_n\}$ then it would mean that for $w_1, w_2, \dots, w_n \in S$, $\displaystyle\sum_{i=1}^{n} a_i w_i = 0$ for $a_1, a_2, \dots, a_n \in F$ and not all zero, which means $S$ is linearly dependent which would contradict the statement of $S$ being linearly independent. Thus $v \in \{w_1, w_2, \dots, w_n\}$.
+
+Say $w_1 = v$ then, $a_1 v + a_2 w_2 + \dots + a_n w_n = 0$. Then, $$v = a_1^{-1}(-a_2 w_2 - \dots - a_n w_n) = -(a_1^{-1}a_2)w_2 - \dots - (a_1^{-1}a_n)w_n.$$
+Since, $v$ is a linear combination of $w_2, \dots, w_n \in S$. Thus $v \in \Span(S)$.
+
+Conversely, Let, $v \in \Span(S)$ then $v = \displaystyle\sum_{i=1}^{m} b_i v_i$ for $v_i \in S$ and $b_i \in F$.
+Thus, $0 = \displaystyle\sum_{i=1}^{m} b_i v_i + (-1)v$. Since, $v \neq v_i$ for $i = 1, 2, \dots, m$, and the coefficient of $v$ in the linear combination is non zero. Therefore, $\{v_1, v_2, \dots, v_m, v\}$ is linearly dependent. Here, $\{v_1, v_2, \dots, v_m, v\} \subseteq S \cup \{v\}$. Hence, $S \cup \{v\}$ is linearly dependent.
+\end{proof}
+
+\section{Bases and Dimensions}
+\begin{definition}
+    A basis $\B$ for a vector space $V$ is a linearly independent subset of $V$ that generates $V$.
+\end{definition}
+
+\begin{theorem}
+    Let $V$ be a vector space over a field $F$ and $\B = \{u_1, u_2, \ldots, u_n\}$ be a subset of $V$. Then $\B$ is a basis for $V$ if and only if each $v \in V$ can be uniquely expressed as a linear combination of vectors of $\B$, \textit{i.e.},
+    \[
+    v = \sum_{i = 1}^{n}a_iu_i \ \forall \ a_i \in F
+    \]
+\end{theorem}
+
+\begin{proof}
+    Assuming $\B$ as a basis for $V$. Then $\B$ is linearly independent and $\Span(\B) = V$. Also let $v \in V$ then $v \in \Span(\B)$.
+
+$$\therefore v = \sum_{i=1}^{n} a_i v_i \ \forall \ a_i \in F \ \& \ v_i \in \B$$. Also let $$v = \sum_{i=1}^{n} b_i v_i \ \forall \ b_i \in F \ \& \ v_i \in \B$$.
+
+$$\therefore 0 = \sum_{i=1}^{n} (a_i - b_i) v_i \ \forall \ a_i, b_i \in F \ \& \ v_i \in \B$$.
+
+Since $\B$ is linearly independent. Then, $a_i - b_i = 0 \Rightarrow a_i = b_i \ \forall \ a_i, b_i \in F$. Thus, $v$ is unique.
+
+Conversely, let $v \in V$ can be uniquely written as a linear combination of vectors of $\B$, i.e., $v = \displaystyle\sum_{i=1}^{n} a_i v_i \ \forall \ a_i \in F \ \& \ v_i \in \B$. Therefore $v \in \Span(\B)$. Thus, $V \subseteq \Span(\B)$.
+
+Again, let $v \in \Span(\B)$ then $v = \displaystyle\sum_{i=1}^{n} a_i v_i \ \forall \ a_i \in F \ \& \ v_i \in \B$.
+Then by the definition, $v \in V$. Therefore $\Span(\B) \subseteq V$. Hence, $\Span(\B) = V$.
+
+Since, $v \in \Span(\B)$ then $$v = \sum_{i=1}^{n} a_i v_i \ \& \ v = \sum_{i=1}^{n} b_i v_i \ \forall \ a_i, b_i \in F \ \& \ v_i \in \B$$.
+
+$$\therefore 0 = \sum_{i=1}^{n} (a_i - b_i) v_i \ \forall \ a_i, b_i \in F \ \& \ v_i \in \B$$.
+
+Since, $v$ is unique, $a_i = b_i \Rightarrow a_i - b_i = 0$. Therefore, $0 = \displaystyle\sum_{i=1}^{n} (a_i - b_i) v_i \ \forall \ a_i, b_i \in F \ \& \ v_i \in \B \ \& \ a_i - b_i = 0$. Therefore, $\B$ is linearly independent.
+
+Hence, $\B$ is a basis for $V$.
+\end{proof}
+
+\begin{theorem}
+    If a vector space $V$ over a field $F$ is generated by a finite set $S$, then some subset of $S$ is a basis for $V$. Hence $V$ has a finite basis.
+\end{theorem}
+
+\begin{proof}
+    Given, $S \subseteq V$ is a finite set and $\Span(S) = V$. We need to prove, $\B \subseteq S$ such that $\B$ is a basis for $V$.
+
+If $S = \emptyset$ or $S = \{0\}$ then $\Span(S) = \{0\} = V$. Here $\Span(\emptyset) = \{0\}$ and $\emptyset$ is linearly independent. Thus, $\emptyset$ is a basis for $V$.
+Also, $\emptyset \subseteq S$. Hence, some subset of $S$ is a basis for $V$.
+
+Let, $v_1 \in S$ such that $v_1 \neq 0$. We know a subset with only one element is linearly independent. Thus $\{v_1\}$ is linearly independent.
+
+If possible, we keep on choosing vectors $\{v_1, v_2, \dots, v_k\} \subseteq S$ such that $\{v_1, v_2, \dots, v_k\}$ remains completely independent. Since $S$ is a finite set, total vectors in $\{v_1, v_2, \dots, v_k\}$ will always be less than total vectors in $S$. Thus $k \leq |S|$. Now if we let, $\B = \{v_1, v_2, \dots, v_k\}$ then $\B$ is a finite subset of $S$.
+
+Now let $v \in S - \B$. Since, $\B$ has all linearly independent vectors of $S$. Thus, $\B \cup \{v\}$ is linearly dependent. By Theorem-1.3, $v \in \Span(\B)$.
+
+Let, $v \in S$ then if $v \in \B$ then $v \in \Span(\B)$ and if $v \in S - \B$ then $v \in \Span(\B)$. Thus, $S \subseteq \Span(\B)$. Hence by Theorem-1.1, $\Span(S) \subseteq \Span(\B)$ or $V \subseteq \Span(\B)$. Therefore, $\Span(\B) = V$ and $\B$ is a linearly independent.
+
+Thus, $\B$ is a basis for $V$. Hence, $V$ has a finite basis.
+\end{proof}
+
+\begin{theorem}[\textbf{Replacement Theorem}]
+    Let $V$ be a vector space generated by $G$ containing exactly $n$ vectors, and $L$ be a linearly independent set of $V$ containing exactly $m$ vectors. Then $m \leq n$ and there exists $H \subseteq G$ containing $n-m$ vectors such that $L \cup H$ generates $V$.
+\end{theorem}
+
+\begin{proof}
+    Given, $\Span(G) = V$ and $|G| = n$ \& $L$ is linearly independent and $|L| = m$.
+To prove, $m \leq n$ and $H \subseteq G$, $|H| = n-m$ and $\Span(L \cup H) = V$.
+
+\noindent (Proof by mathematical induction):
+
+\noindent \textbf{Base case}:
+
+Let $m=0$ then $L = \emptyset$ then $L \cup H = H$. Thus, $\Span(L \cup H) = V$ if $G = H$.
+
+\noindent \textbf{General case}:
+
+Suppose, the theorem is true for $m \geq 0$. Let, $L = \{v_1, v_2, \dots, v_{m+1}\}$ be a linearly independent set $V$ containing $m+1$ vectors. Then, $L' = \{v_1, v_2, \dots, v_m\} \subseteq L \subseteq V$. Since $L$ is linearly independent. Then by the Corollary-1.2.1, $L'$ is linearly independent. Thus, by our inductive hypothesis, we have,
+$m \leq n$ such that there exists $H' = \{u_1, u_2, \dots, u_{n-m}\} \subseteq G \st L' \cup H'$ generates $V$.
+
+Since, $v_{m+1} \in V$ then there exists $a_1, a_2, \dots, a_m, b_1, b_2, \dots, b_{n-m} \in F$ such that
+\[
+    v_{m+1} = a_1 v_1 + a_2 v_2 + \dots + a_m v_m + b_1 u_1 + b_2 u_2 + \dots + b_{n-m} u_{n-m} \tag{1}
+\]
+
+Here if, $n-m = 0$ then $H' = \emptyset$ and, $(1) \Rightarrow v_{m+1} = a_1 v_1 + a_2 v_2 + \dots + a_m v_m$.
+
+Again, $L'$ is linearly independent and $\Span(L') = V$. Also $v_{m+1} \in V \setminus L'$.
+By Theorem-1.3, $L' \cup \{v_{m+1}\}$ is linearly dependent. Thus, $L$ is linearly dependent which contradicts our statement $L$ is linearly independent. Thus, $n-m \neq 0 \Rightarrow n > m$ or $n \geq m+1$.
+
+Again for some $b_i$, say $b_1$ must be non zero, otherwise we run into same contradiction. Thus,
+\begin{align*}
+    (1) \Rightarrow u_1 &= -(b_1^{-1} a_1) v_1 - (b_1^{-1} a_2) v_2 - \dots - (b_1^{-1} a_m) v_m - b_1^{-1} v_{m+1} +\\
+    & \quad -(b_1^{-1} b_2) u_2 - \dots - (b_1^{-1} b_{n-m}) u_{n-m}.
+\end{align*}
+
+Let, $H = \{u_2, u_3, \dots, u_{n-m}\}$. Then, $u_1 \in \Span(L \cup H)$. Similarly,
+$v_1, v_2, \dots, v_m, u_2, u_3, \dots, u_{n-m} \in \Span(L \cup H)$. Thus,
+$\{v_1, v_2, \dots, v_m, u_1, u_2, \dots, u_{n-m}\} \subseteq \Span(L \cup H)$
+or $\Span(L' \cup H') \subseteq \Span(L \cup H)$. Here $\Span(L \cup H) \subseteq V$ and since, $\Span(L' \cup H') = V$ thus, $V \subseteq \Span(L \cup H)$. Thus, $\Span(L \cup H) = V$. Also, $H \subseteq G$ containing $(n-1) - m = n - (m+1)$ vectors.
+
+Thus, we prove, $n \geq m+1$ and $H \subseteq G$ containing $n-(m+1)$ such that $\Span(L \cup H) = V$. Hence, by mathematical induction, the theorem is true for all $m \geq 0$.
+\end{proof}
+
+\begin{remark}
+    The Repalcement Theorem allows us to replace vectors in a generating set with the vectors in linearly independent set while still having the ability to generate the entire space.
+\end{remark}
+
+\begin{corollary}
+    Let $V$ be a vector space having finite basis. Then every basis of $V$ contains same number of vectors.
+\end{corollary}
+
+\begin{proof}
+    Suppose, $\B$ be a finite basis of $V$ that contains exactly $n$ vectors and $\B'$ be a finite basis of $V$ that contains exactly $m$ vectors.
+Since $\B$ is a basis for $V$ then $\Span(\B) = V$ and since $\B'$ is a basis for $V$, then $\B'$ is a linearly independent set. Then by Replacement Theorem, $n \geq m$.
+
+Again, since $\B'$ is a basis for $V$ then $\Span(\B') = V$ and since $\B$ is a basis for $V$, then $\B$ is a linearly independent set. Then by Replacement Theorem, $m \geq n$.
+
+Both cases are possible only when $m = n$. Thus, every basis of $V$ contains same number of vectors.
+\end{proof}
+
+\begin{definition}
+    A vector space $V$ is called finite-dimensional if it has a basis consisting a finite number of vectors. The unique number of vectors in each basis for $V$ is called the dimension of $V$ and is denoted by $\dim(V)$.
+\end{definition}
+
+A vector space that is not finite-dimensional is called infinite-dimensional.
+
+\begin{corollary}
+    Let $V$ be a vector space with dimension $n$.
+    \begin{enumerate}
+        \item Any finite generating set contains at least $n$ vectors, and a generating set for $V$ that contains exactly $n$ vectors is a basis for $V$.
+        \item Any linearly independent subset of $V$ that contains exactly $n$ vectors is a basis for $V$.
+        \item Every linearly independent subset of $V$ can be extended to a basis for $V$.
+    \end{enumerate}
+\end{corollary}
+
+\begin{proof}
+    Let $\B$ be a basis for $V$. Then $\B$ contains $n$ vectors.
+    \begin{enumerate}
+        \item Let $G$ be a finite generating set of $V$. By Theorem-2.2, $H \subseteq G$ is a basis for $V$. By Corollary-2.3.1, $H$ contains exactly $n$ vectors. Since, $H \subseteq G$ then $G$ must atleast contain $n$ vectors. If $G$ contains exactly $n$ vectors then $H = G$ and $G$ is a basis for $V$.
+        \item Let $L$ be a linearly independent subset of $V$ containing exactly $n$ vectors. Since $\B$ is a basis for $V$ then $\Span(\B) = V$ and $|\B| = n$. By replacement theorem, $H \subseteq \B$ containing $n-n=0$ vectors and $\Span(L \cup H) = V$. Since, $H = \emptyset$ then $L \cup H = L$. Thus $\Span(L) = V$. Hence, $L$ is a basis for $V$.
+        \item If $L$ is linearly independent subset of $V$ containing $m$ vectors. By replacement theorem we have, $H \subseteq \B$ containing $(n-m)$ vectors such that $\Span(L \cup H) = V$. Now, since $|L| = m$ and $|H| = n-m$, thus $L \cup H$ contains atmost $n$ vectors. Also (a) implies that $L \cup H$ contains exactly $n$ vectors. Also, that $L \cup H$ is a basis for $V$.
+    \end{enumerate}
+\end{proof}
+
+\begin{remark}
+    In an $n$-dimensional vector space, any linearly independent or sapnning set with exactly $n$ vectors is a basis for the vector space. And if a linearly independent set has less than $n$ vectors, then it can be extended to a basis for the vector space.
+\end{remark}
+
+\begin{theorem}
+    Let $W$ be a subspace of a finite-dimensional vector space $V$. Then $W$ is finite dimensional and $\dim(W) \leq \dim(V)$. Moreover, if $\dim(W) = \dim(V)$ then $V = W$.
+\end{theorem}
+
+\begin{proof}
+    
+\end{proof}
+\end{document}
