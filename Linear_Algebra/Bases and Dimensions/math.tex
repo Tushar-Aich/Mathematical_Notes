@@ -41,7 +41,7 @@
 \begin{document}
 \maketitle
 \begin{abstract}
-    Vector spaces and its subspaces builds the foundation for the abstract linear algebra. This paper explores structure of the vector spaces and subspaces through the study of basis and dimensions. By analyzing the span and the linear independence of vectors we see how those vectors generates the skeleton of the vector space.
+    Vector spaces and its subspaces build the foundation for the abstract linear algebra. This paper explores the structure of the vector spaces and subspaces through the study of basis and dimensions. By analyzing the span and the linear independence of vectors we see how those vectors generates the skeleton of the vector space.
 \end{abstract}
 
 \section{Prerequisites}
@@ -105,7 +105,7 @@ Following facts about linearly independent sets are true in any vector space:
 \begin{enumerate}
     \item Empty sets are linearly independent.
     \item A set consisting of a single non zero vector is linealry independent.
-    \item A set is linearlt independent if and only if $S$ is a subset of a vector space $V$ over a field $F$ such that whenever
+    \item A set is linearly independent if and only if $S$ is a subset of a vector space $V$ over a field $F$ such that whenever
     \[
     \sum_{i = 1}^{n} a_iu_i = 0 \ \forall \ a_i \in F \ \& \ u_i \in S
     \]
@@ -242,7 +242,7 @@ Thus, we prove, $n \geq m+1$ and $H \subseteq G$ containing $n-(m+1)$ such that 
 \end{proof}
 
 \begin{remark}
-    The Repalcement Theorem allows us to replace vectors in a generating set with the vectors in linearly independent set while still having the ability to generate the entire space.
+    The Replacement Theorem allows us to replace vectors in a generating set with the vectors in linearly independent set while still having the ability to generate the entire space.
 \end{remark}
 
 \begin{corollary}
@@ -291,6 +291,98 @@ A vector space that is not finite-dimensional is called infinite-dimensional.
 \end{theorem}
 
 \begin{proof}
-    
+    Let $\dim(V) = n$. If $W = \{0\}$, then $W$ is finite dimensional and $\dim(W) = 0 \leq n$. Again if $W$ contains a non zero vector $x_1$, then $\{x_1\}$ is linearly independent. If possible we continue choosing vectors $x_1, x_2, \dots, x_k \in W$ such that $\{x_1, x_2, \dots, x_k\}$ is linearly independent. Since, $\{x_1, x_2, \dots, x_k\} \subseteq W$ and $W \subseteq V$. Thus, we never have more than $n$ vectors.
+
+$$\therefore k \leq |V| \Rightarrow k \leq n$$.
+
+By adjoining $\{x_1, x_2, \dots, x_k\}$ with any other vector in $W$, the set becomes linearly dependent. Thus, by Theorem-1.3, $\{x_1, x_2, \dots, x_k\}$ generates $W$. Therefore $\dim(W) = k \leq n = \dim(V)$.
+
+If $\dim(W) = n$ then a basis for $W$ is a linearly independent set of $V$ containing $n$-vectors. But part (b) of Corollary-2.3.2 of replacement theorems says that the basis for $W$ is also a basis for $V$; Thus, $V = W$.
 \end{proof}
+
+\begin{corollary}
+    If $W$ is a subspace of a finite-dimensional vector space $V$, then any basis for $W$ can be extended to a basis for $V$.
+\end{corollary}
+
+\begin{proof}
+    Let $S$ be a basis for $W$. Because $S$ is a linearly independent subset of $V$. Thus, by part (c) of Corollary-2.3.2 of replacement theorem, we can say that $S$ can be extended to a basis for $V$.
+\end{proof}
+
+\begin{theorem}
+    if $W_1$ and $W_2$ are finite-dimensional subspaces of a vector space $V$ over a field $F$, then the subspace $W_1 + W_2$ is finite-dimensional, and 
+    \[\dim(W_1+W_2) = \dim(W_1) + \dim(W_2) - \dim(W_1 \cap W_2)\]
+\end{theorem}
+
+\begin{proof}
+    Let $\B = \{u_1, u_2, \dots, u_k\}$ be a basis for $W_1 \cap W_2$. Since, $W_1$ \& $W_2$ are finite-dimensional. Thus $\dim(W_1 \cap W_2) = k$. Now, since $\B$ is a linearly independent set of $W_1$. Therefore by part (c) of Corollary-2.3.2 of replacement theorem, $\B$ can be extended to a basis for $W_1$. Then $\B_1 = \{u_1, u_2, \dots, u_k, v_1, v_2, \dots, v_m\}$ is a basis for $W_1$. Similarly, $\B_2 = \{u_1, u_2, \dots, u_k, w_1, w_2, \dots, w_n\}$ is a basis for $W_2$. Hence, $\dim(W_1) = k+m$ \& $\dim(W_2) = k+n$.
+
+\vspace{3mm}
+\noindent Proving $W_1 + W_2$ is finite dimensional:
+
+\noindent Let $\B' = \{u_1, u_2, \dots, u_k, v_1, v_2, \dots, v_m, w_1, w_2, \dots, w_n\}$. Now we need to prove $\B'$ is a basis for $W_1 + W_2$.
+
+\vspace{3mm}
+\noindent Proving $\Span(\B') = W_1 + W_2$:
+
+\noindent Let $w \in W_1 + W_2$ then by the definition of sum of subsets, $w = w_1 + w_2$ for $w_1 \in W_1$ and $w_2 \in W_2$.
+Since, $\B_1$ is a basis for $W_1$ then, $\Span(\B_1) = W_1$. So,
+$$w_1 = \sum_{i=1}^{k} a_i u_i + \sum_{i=1}^{m} b_i v_i \ \forall \ a_i, b_i \in F$$
+
+\noindent Similarly, we can show,
+$$w_2 = \sum_{i=1}^{k} c_i u_i + \sum_{i=1}^{n} d_i w_i \ \forall \ c_i, d_i \in F$$
+
+\noindent Thus,
+$$w = \sum_{i=1}^{k} (a_i + c_i) u_i + \sum_{i=1}^{m} b_i v_i + \sum_{i=1}^{n} d_i w_i$$
+
+\noindent Let, $a_i + c_i = x_i$ for $i=1, 2, \dots, k$.
+$$\therefore w = \sum_{i=1}^{k} x_i u_i + \sum_{i=1}^{m} b_i v_i + \sum_{i=1}^{n} d_i w_i$$
+Thus, $w \in \Span(\B')$ and hence $W_1 + W_2 \subseteq \Span(\B')$.
+
+Again, let $x \in \Span(\B')$, then,
+$$x = \sum_{i=1}^{k} a_i u_i + \sum_{i=1}^{m} b_i v_i + \sum_{i=1}^{n} c_i w_i \ \forall \ a_i, b_i, c_i \in F$$
+
+\noindent Now, let $a_i = x_i + y_i$ for $i=1, 2, \dots, k$. Then,
+\[x = \sum_{i=1}^{k} x_i u_i + \sum_{i=1}^{m} b_i v_i + \sum_{i=1}^{k} y_i u_i + \sum_{i=1}^{n} c_i w_i \quad \tag{i}\]
+
+\noindent Again, let $w_1 \in W_1$ then, $w_1 = \displaystyle\sum_{i=1}^{k} x_i u_i + \displaystyle\sum_{i=1}^{m} b_i v_i$, since $\B_1$ spans $W_1$ and similarly for $w_2 \in W_2$, we can show that $w_2 = \displaystyle\sum_{i=1}^{k} y_i u_i + \displaystyle\sum_{i=1}^{n} c_i w_i$, since $\B_2$ spans $W_2$. Thus, from (i) we have $x = w_1 + w_2$ for $w_1 \in W_1$ and $w_2 \in W_2$. By the definition of sum of subsets, $x \in W_1 + W_2$. Thus, $\Span(\B') \subseteq W_1 + W_2$.
+$$\therefore \Span(\B') = W_1 + W_2$$
+
+\vspace{3mm}
+\noindent Proving $\B'$ is linearly independent:
+
+\noindent Let there be a linear combination of $\B'$, such that,
+\[\sum_{i=1}^{k} a_i u_i + \sum_{i=1}^{m} b_i v_i + \sum_{i=1}^{n} c_i w_i = 0 \ \forall \ a_i, b_i, c_i \in F \tag{ii}\]
+$$\Rightarrow \sum_{i=1}^{k} a_i u_i + \sum_{i=1}^{m} b_i v_i = \sum_{i=1}^{n} (-c_i) w_i$$
+
+\noindent Since, $\B_1$ spans $W_1$. Thus, .$$sum_{i=1}^{k} a_i u_i + \sum_{i=1}^{m} b_i v_i = \sum_{i=1}^{n} (-c_i) w_i \in W_1.$$
+
+\noindent Since, $\B_2$ spans $W_2$ then for some scalar $c_i$, $$\sum_{i=1}^{n} (-c_i) w_i \in W_2.$$ Therefore, $$\sum_{i=1}^{n} (-c_i) w_i \in W_1 \cap W_2.$$
+
+\noindent Since, $\B$ is a basis for $W_1 \cap W_2$ then $\B$ spans $W_1 \cap W_2$. Thus,
+$$\sum_{i=1}^{n} (-c_i) w_i = \sum_{i=1}^{k} d_i u_i$$
+\[\Rightarrow \sum_{i=1}^{k} d_i u_i + \sum_{i=1}^{n} c_i w_i = 0 \tag{iii}\]
+
+\noindent Since, $\B_2$ is linearly independent. Thus in (iii) $d_i = c_i = 0$. Also, since, $\B_1$ is linearly independent. Thus in (ii), $a_i = b_i = c_i = 0$. Hence, $\B'$ is linearly independent.
+
+Thus, $\B'$ is a basis for $W_1 + W_2$. Since $\B$ contains finite number of vectors, $W_1 + W_2$ is finite dimensional.
+
+\vspace{3mm}
+\noindent Proving $\dim(W_1 + W_2) = \dim(W_1) + \dim(W_2) - \dim(W_1 \cap W_2)$:
+
+\noindent We have, $\dim(W_1 \cap W_2) = k$, $\dim(W_1) = k + m$ and $\dim(W_2) = k + n$. Since we proved $W_1 + W_2$ is finite-dimensional and $\B'$ is a basis for $W_1 + W_2$. Thus,
+\begin{align*}
+\dim(W_1 + W_2) &= k + m + n \\
+&= k + m + n + k - k \\
+&= (k + m) + (k + n) - k \\
+&= \dim(W_1) + \dim(W_2) - \dim(W_1 \cap W_2)
+\end{align*}
+\end{proof}
+
+\section{Conclusion}
+    In this article, we have discussed the concepts of linear dependence and independence, bases and dimensions of vector spaces. We have also proved some important theorems related to these concepts. The Replacement Theorem is one of the most important theorems in linear algebra which allows us to replace vectors in a generating set with the vectors in linearly independent set while still having the ability to generate the entire space. We have also seen that every basis of a finite-dimensional vector space contains same number of vectors and that any linearly independent subset of a finite-dimensional vector space can be extended to a basis for the vector space.
+
+\begin{thebibliography}{9}
+    \bibitem{fis_linear_algebra}
+    Friedberg, S. H., Insel, A. J., \& Spence, L. E. (2018). \textit{Linear Algebra} (5th ed.). Pearson.
+\end{thebibliography}
 \end{document}
