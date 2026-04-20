@@ -1,0 +1,512 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsfonts, amsmath, amssymb, amsthm}
+\usepackage{geometry}
+\usepackage[hidelinks]{hyperref}
+\usepackage[none]{hyphenat}
+\usepackage{setspace}
+\usepackage{float}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{cleveref}
+\usepackage{tikz}
+\usepackage{mathrsfs}
+
+\geometry{a4paper, left=0.5in, top=0.5in, right=0.5in, bottom=0.7in}
+\onehalfspacing
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{example}{Example}[section]
+\theoremstyle{remark}
+\newtheorem*{remark}{\textbf{Remark}}
+
+\newcommand{\e}{\varepsilon}
+\newcommand{\st}{\text{ such that }}
+\newcommand{\B}{\mathscr{B}}
+\newcommand{\C}{\mathscr{C}}
+\newcommand{\LL}{\mathscr{L}}
+\DeclareMathOperator{\Span}{span}
+\DeclareMathOperator{\nullity}{nullity}
+\DeclareMathOperator{\rank}{rank}
+
+\hyphenpenalty=10000
+\exhyphenpenalty=10000
+
+\title{\textbf{\Large The Anatomy of Linear Maps \\ \large Bridging the gap between Matrices and linear transformations}}
+\author{\textbf{Tushar Kumar Aich}}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+    This papers presents a rigorous study of linear transformation and their matrix representations. By exploring the structure and properties of linear maps, the paper establishes a relation between the abstract transformations and their coordinate-based matrix representation.
+\end{abstract}
+
+\section{Introduction}
+The initial study of vector spaces is essentially static. We examine fixed spaces, their spanning sets, and study their global structures using the static elements in the spaces. However, to fully grasp the geometry of vector spaces, we must ask what happens when we set these points in motion. Linear transformations represent this dynamic state of change. A transformation $T: V \to W$ describes how one space maps into another.
+
+\section{Linear Transformations}
+\begin{definition}
+    Let $V$ and $W$ be vector spaces over a field $F$. We call a function $T:V \to W$ a linear transformation from $V$ to $W$ if, for all $x,y \in V$ and $c \in F$, we have
+    \[
+    T(x+y) = T(x)+T(y) \quad \text{and} \quad T(cx) = c T(x)
+    \]
+\end{definition}
+We simply call $T$ as linear if
+\begin{enumerate}
+    \item If $T$ is linear then $T(0)=0$.
+    \item $T$ is linear if and only if $T(cx+y)=cT(x)+T(y) \ \forall \ x,y \in V \text{ and } c \in F$.
+    \item If $T$ is linear then $T(x-y)=T(x)-T(y) \ \forall \ x,y \in V$.
+    \item $T$ is linear if and only if $T\left(\displaystyle\sum_{i=1}^n a_ix_i\right) = \displaystyle\sum_{i=1}^n a_iT(x_i)$ $\forall \ a_i \in F \text{ and } x_i \in V$.
+\end{enumerate}
+
+For any angle $\theta$, define $T_{\theta}:\mathbb{R}^2 \to \mathbb{R}^2$ by the rule $T_\theta(a_1,a_2)$ is the vector obtained by rotating $(a_1,a_2)$ counterclockwise by $\theta$. Then $T_{\theta}:\mathbb{R}^2 \to \mathbb{R}^2$ is a linear transformation that is called rotation by $\theta$.
+
+Let there be a vector from the origin to the point $(a_1,a_2)$ with distance $r$ make angle $\alpha$ with x-axis. Then $(a_1,a_2) = (r\cos\alpha,r\sin\alpha)$ and if the vector is rotated anticlockwise by some angle $\theta$, then the transformation will be given by
+\begin{align*}
+    T_\theta(a_1,a_2) &= (r\cos(\alpha + \theta), r\sin(\alpha + \theta)) \\
+    &= (r\cos\alpha\cos\theta - r\sin\alpha\sin\theta, r\sin\alpha\cos\theta + r\cos\alpha\sin\theta) \\
+    &= (a_1\cos\theta-a_2\sin\theta, a_1\sin\theta+a_2\cos\theta)
+\end{align*}
+
+If we define $T:\mathbb{R}^2 \to \mathbb{R}^2$ by $T(a_1,a_2)=(a_1,-a_2)$. $T$ is called reflection about x-axis.
+
+If we define $T:\mathbb{R}^2 \to \mathbb{R}^2$ by $T(a_1,a_2)=(a_1,0)$. $T$ is called projection about x-axis.
+
+\section{Null Space and Range}
+\begin{definition}
+    Let $V$ and $W$ be vector spaces and let $T:V \to W$ be linear. We define the null space (or Kernel) $N(T)$ of $T$ to be the set of all vectors $x \in V$ such that $T(x)=0$, \textit{i.e.}, $N(T) = \{x \in V : T(x)=0\}$.
+\end{definition}
+
+\begin{definition}
+    The range (or image) $R(T)$ of $T$ is the subset of $W$ consisting of all images (under $T$) of vectors in $V$, \textit{i.e.}, $R(T) = \{T(x) : x \in V\}$.
+\end{definition}
+
+\begin{theorem}
+    Let $V$ and $W$ be vector spaces and $T: V \to W$ be linear. Then $N(T)$ and $R(T)$ are subspaces of $V$ \& $W$ respectively.
+\end{theorem}
+
+\begin{proof}
+    Let $0_v$ and $0_w$ be the zero vectors of $V$ \& $W$ respectively. Now, since, $T(0_v) = 0_w$ then $0_v \in N(T)$. Let $x, y \in N(T)$ and $c \in F$ then, $T(x+y) = T(x) + T(y) = 0_w + 0_w = 0_w$ and $T(cx) = c T(x) = c \cdot 0_w = 0_w$. Thus, $x+y \in N(T)$ and $cx \in N(T)$. Hence $N(T)$ is a subspace of $V$.
+
+    Again, since, $T(0_v) = 0_w$, thus, $0_w \in R(T)$. Now let $x, y \in R(T)$ and $c \in F$. Then, there exists $v, w \in V$ such that $T(v) = x$ and $T(w) = y$. So, $T(v+w) = x+y$ and $T(cv) = c T(v) = cx$. Thus, $x+y \in R(T)$ and $cx \in R(T)$. Hence $R(T)$ is a subspace of $W$.
+\end{proof}
+
+\begin{theorem}
+    Let $V$ and $W$ be vector space over a field $F$ and let $T:V \to W$ be linear. If $\B = \{v_1,v_2,\ldots,v_n\}$ is a basis for $V$, then
+    \[
+    R(T) = \Span(T(\B)) = \Span(\{T(v_1), T(v_2), \ldots, T(v_n)\})
+    \]
+\end{theorem}
+
+\begin{proof}
+    Here, $T(v_i) \in R(T) \ \forall \ i$. Since $R(T)$ is a subspace and $T(\B) \in R(T)$. Since we know if a subset is contained by a subspace then its span is also contained in that subspace,
+    $$\therefore \Span(T(\B)) \subseteq R(T)$$
+
+    Now let $w \in R(T)$, then $w = T(v)$ for some $v \in V$. Since, $\B$ is a basis for $V$, we have
+    $$v = \sum_{i=1}^{n} a_i v_i \ \forall \ a_i \in F \ \& \ v_i \in V.$$
+
+    Since, $T$ is linear, it follows that,
+    $$w = T(v) = \sum_{i=1}^{n} a_i T(v_i) \in \Span(T(\B)).$$
+
+    $$R(T) \subseteq \Span(T(\B)).$$
+
+    Hence, $R(T) = \Span(T(\B)) = \Span(\{T(v_1), T(v_2), \dots, T(v_n)\})$
+\end{proof}
+
+\begin{definition}
+    Let $V$ and $W$ be vector spaces and let $T:V \to W$ be linear. If $N(T) \text{ and } R(T)$ are finite-dimensional, then we define the nullity of $T$(or $\nullity(T)$), and the rank of $T$ (or $\rank(T)$), to be the dimensions of $N(T)$ and $R(T)$ respectively.
+\end{definition}
+
+\begin{theorem}[\textbf{Rank-Nullity Theorem}]
+    Let $V$ and $W$ be vector spaces, and let $T: V \to W$ be linear. If $V$ is finite-dimensional, then,
+    $$\rank(T) + \nullity(T) = \dim(V).$$
+\end{theorem}
+
+\begin{proof}
+    Let $\dim(V) = n$ and $\nullity(T)$ or $\dim(N(T)) = k$ then we can say $\B = \{v_1, v_2, \dots, v_k\}$ is a basis for $N(T)$. By Theorem-3.1, we know $N(T)$ is a subspace of $V$. We know if there is a subspace of a finite-dimensional vector apace then the basis for subspace can be extended to be a basis for the vector space. Thus, we can say that $\B = \{v_1, v_2, \dots, v_k\}$ can be extended to $\B' = \{v_1, v_2, \dots, v_n\}$ to be a basis for $V$. Now to complete the proof, we need to show $\rank(T)$ or $\dim(R(T))$ is finite-dimensional and $\dim(R(T)) = n - k$. 
+
+    Now, let, $v \in V$. Since, $\B'$ is a basis for $V$. Thus,
+    \begin{align*}
+        v &= \sum_{i=1}^{n} a_i v_i \text{ for } v_i \in \B' \text{ and } a_i \in F \\
+        &= a_1 v_1 + a_2 v_2 + \dots + a_k v_k + a_{k+1} v_{k+1} + \dots + a_n v_n
+    \end{align*}
+    Applying transformation on both sides,
+    \begin{align*}
+         T(v) &= a_1 T(v_1) + a_2 T(v_2) + \dots + a_k T(v_k) + a_{k+1} T(v_{k+1}) + \dots + a_n T(v_n) \\
+         \implies T(v) &= a_{k+1} T(v_{k+1}) + \dots + a_n T(v_n),
+    \end{align*}
+    where the terms till $v_k$ disappears since $v_k \in N(T)$. Since, $\B'$ is a basis for $V$, by Theorem-3.2,
+    \begin{align*}
+        R(T) &= \Span(\{T(v_1), T(v_2), \dots, T(v_n)\})\\
+        &= \Span(\{T(v_{k+1}), T(v_{k+2}), \dots, T(v_n)\}).
+    \end{align*}
+
+    Now, proving $\{T(v_{k+1}), \dots, T(v_n)\}$ is linearly independent. Suppose,
+    $c_{k+1}, c_{k+2}, \dots, c_n \in F$ such that $\displaystyle\sum_{i=k+1}^{n} c_i T(v_i) = 0_w$ or $T\left(\displaystyle\sum_{i=k+1}^{n} c_i v_i\right) = 0_w$. Thus, $\displaystyle\sum_{i=k+1}^{n} c_i v_i \in N(T)$. But we know, $\B$ spans $N(T)$. Thus,
+    \begin{align*}
+        \sum_{i=k+1}^n c_iv_i &= \sum_{i=1}^k d_iv_i \quad \text{ for } d_i \in F \\
+        \implies \sum_{i=1}^k (-d_i)v_i + \sum_{i=k+1}^n c_iv_i &= 0_v
+    \end{align*}
+    Since $\B'$ is a basis for $V$, we can say $c_i = 0$ for all $i$. Thus $\{T(v_{k+1}), T(v_{k+2}), \ldots, T(v_n)\}$ is linearly independent and can be considered a basis for $R(T)$. Hence, $\rank(T)$ or $\dim(R(T)) = n-k$.
+\end{proof}
+
+\begin{example}
+    $T:P_2(\mathbb{R}) \to P_3(\mathbb{R})$ defined by $T(f(x))=xf(x)+f'(x)$.
+
+    Here, let $f(x),g(x) \in P_2(\mathbb{R})$ and $c \in \mathbb{R}$, we need to show $T(cf+g)=cT(f)+T(g)$. Here,
+    \begin{align*}
+        T(cf+g) &= x(cf(x)+g(x))+(cf(x)+g(x))' \\
+        &= xcf(x)+xg(x)+cf'(x)+g'(x) \\
+        &= xcf(x)+cf'(x)+xg(x)+g'(x) \\
+        &= c(xf(x)+f'(x)) + (xg(x)+g'(x))\\
+        &= cT(f)+T(g)
+    \end{align*}
+    Hence, $T$ is linear.
+
+    Since, $f(x) \in P_2(\mathbb{R})$, then $f(x) = ax^2+bx+c$ for $a,b,c \in \mathbb{R}$. Also $N(T)=\{f(x) \in P_2(\mathbb{R}): T(f(x)) = 0\}$
+    \begin{align*}
+        \therefore& \ T(f(x))=0 \\
+        \implies& \ xf(x)+f'(x)=0 \\
+        \implies& \ x(ax^2+bx+c) + (2ax+b) = 0\\
+        \implies& \ ax^3 + bx^2 + (c+2a)x + b = 0
+    \end{align*}
+    \[
+    \therefore \ a = b = c = 0
+    \]
+    which is the only solution for zero polynomial. Thus basis for $N(T) = \{0\}$ and $\dim(N(T))=0$ or $\nullity(T)=0$.
+
+    Again, we know $R(T)=\{T(f(x)): f(x) \in P_2(\mathbb{R})\}$. Since $f(x) \in P_2(\mathbb{R})$, its standard basis is $\{1,x,x^2\}$,
+    \[
+    \therefore \ T(1)=x, \quad T(x)=x^2+1, \quad T(x^2)=x^3+2x
+    \]
+    Checking for linear independence:
+    \begin{align*}
+        & a_1x + a_2(x^2+1)+a_3(x^3+x) = 0 \quad \text{for } a_1,a_2,a_3 \in \mathbb{R} \\
+        \implies & (a_1+2a_3)x+a_2x^2+a_3x^3+a_2=0\\
+        \therefore \ & a_1=a_2=a_3=0
+    \end{align*}
+    Thus, $\{x,x^2+1,x^3+2x\}$ is a basis for $R(T)$. Thus $\rank(T)$ or $\dim(R(T))=3$.
+
+    We can also verify the Rank-Nullity Theorem. Here, $V$ is $P_2(\mathbb{R})$. 
+    
+    Thus, $\dim(V)=3=0+3=\nullity(T) + \rank(T)$.
+\end{example}
+
+\begin{definition}
+    Let $V$ be a vector space over a field $F$ and $W_1 \text{ and } W_2$ are subspaces of $V$ such that $V = W_1 \oplus W_2 $. A function $T:V\to V$ is called projection on $W_1$ along $W_2$ if, for $x \in V, \ x = x_1+x_2$ for $x_1 \in W_1 \ \& \ x_2 \in W_2$, we have $T(x)=x_1$.
+\end{definition}
+
+\begin{theorem}
+    Using the above definition, If $T:V\to V$ is the projection on $W_1$ along $W_2$ then the following is true:
+    \begin{enumerate}
+        \item $T$ is linear and $W_1 = \{x \in V : T(x)=x\}$.
+        \item $W_1 = R(T)$ and $W_2=N(T)$
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    \begin{enumerate}
+        \item Let $v_1, v_2 \in V$ and $a \in F$. We need to prove,
+        $$T(av_1 + v_2) = a T(v_1) + T(v_2)$$
+
+        Since $V$ is direct sum of $W_1$ and $W_2$ then we can uniquely write $v_1 \ \& \ v_2$ as $v_1 = x_1 + x_2$ and $v_2 = x_1' + x_2'$ for $x_1, x_1' \in W_1$ and $x_2, x_2' \in W_2$. Since, $W_1$ and $W_2$ are subspaces of $V$ then $ax_1 + x_1' \in W_1$ and $ax_2 + x_2' \in W_2$. Thus,
+        $$av_1 + v_2 = (ax_1 + x_1') + (ax_2 + x_2')$$
+        Applying transformation on both sides, we know $T(v) = w_1$ for $w_1 \in W_1$, we get
+        \begin{align*}
+            T(av_1 + v_2) &= ax_1 + x_1'\\
+            &= T(av_1) + T(v_2)\\
+            &= a T(v_1) + T(v_2).
+        \end{align*}
+
+        Hence, $T$ is linear.
+
+        Again, let $x \in W_1 \subseteq V$ then $x \in V$. Then $x$ can be uniquely written as $x = x + 0_v$, where $x \in W_1$ and $0_v \in W_2$. Applying transformation on both sides and using the definition, we get
+        $$T(x) = T(x + 0_v) = x.$$
+        Thus, $x \in \{x \in V : T(x) = x\}$. Hence $W_1 \subseteq \{x \in V : T(x) = x\}$.
+
+        Now again let an arbitrary $x_1 \in \{x \in V : T(x) = x\}$ then $x_1 \in V$ and $T(x_1) = x_1$. But from definition we know for $v \in V$ $T(v) = w_1$ for $w_1 \in W_1$. Thus, $x_1 \in W_1$. Thus, $\{x \in V : T(x) = x\} \subseteq W_1$.
+
+        Hence, $W_1=\{x \in V : T(x)=x\}$.
+
+        \item Let $x \in W_1$, then from part (1), for $x \in V$, $T(x) = x$. Since, $x$ can be written as output of a linear transformation. Thus, $x \in R(T)$. Hence, $W_1 \subseteq R(T)$.
+
+        Again let $x \in R(T)$. By definition $\exists\ v \in V$ such that $T(v) = x$. By the definition of $T$ as a projection on $W_1$ along $W_2$ for some $v \in V$, $T(v) \in W_1$. Thus, $x \in W_1$. Hence, $R(T) \subseteq W_1$.\[\therefore \ W_1 = R(T).\]
+
+        Again let $x \in W_2 \subseteq V$ then $x \in V$. Since, $V$ is direct sum of $W_1$ and $W_2$. Then $x$ can be uniquely written as $x = 0_v + x$ for $0_v \in W_1$ and $x \in W_2$. Applying transformation on both sides,
+        $$T(x) = T(0_v + x) = 0_v.$$
+        Thus, $x \in N(T)$ and $W_2 \subseteq N(T)$.
+
+        Again let $x \in N(T)$ then $T(x) = 0_v$ for $x \in V$. Since, $x \in V$, $x$ can be uniquely written as $x = x_1 + x_2$ for $x_1 \in W_1$ and $x \in W_2$. Then,
+        \begin{align*}
+            T(x) &= T(x_1 + x_2) = 0_v\\
+            \implies & x_1 = 0_v
+        \end{align*}
+        Thus, $x = 0_v + x_2 \Rightarrow x = x_2 \in W_2$. Thus, $N(T) \subseteq W_2$.
+        \[\therefore \ W_2 = N(T)\]
+    \end{enumerate}
+\end{proof}
+
+\begin{definition}
+    Let $V$ be a vector space, and let $T:V \to V$ be linear. A subspace $W$ of $V$ is said to be $T$-invariant if $T(x) \in W$ for every $x \in W$, \textit{i.e.}, $T(W) \subseteq W$.
+\end{definition}
+
+\begin{definition}
+    If $W$ is $T$-invariant, we define restriction on $T$ on $W$ to be the function $T_W:W \to W$ defined by $T_W(x)=T(x) \ \forall \ x \in W$.
+\end{definition}
+
+\begin{theorem}
+    From the above definitions, if $W$ is $T$-invariant then $N(T_w) = N(T) \cap W$ and $R(T_w) = T(W)$.
+\end{theorem}
+
+\begin{proof}
+    Let $x \in N(T_W)$ then $x \in W \subseteq V$ and $T_W(x) = 0_W$. But since $W$ is $T$-invariant then, $T_W(x) = T(x) = 0_W$ for $x \in W \subseteq V$. Since $W$ is a subspace of $V$ then $0_v = 0_W$. Thus for $x \in V, T(x) = 0_v$. Thus, $x \in N(T)$ and $x \in W$. Therefore, $x \in N(T) \cap W$. Hence,
+    $$N(T_W) \subseteq N(T) \cap W.$$
+
+    Again, let $x \in N(T) \cap W$ then $x \in N(T)$ and $x \in W$. Since, $x \in N(T)$ then for $x \in V, T(x) = 0_v$. Again, since $W$ is a subspace of $V$ then $0_v = 0_W$ and since $W$ is $T$-invariant then $T_W(x) = T(x)$ for $x \in W$. Thus, $T_W(x) = 0_W$ for $x \in W$. Therefore, $x \in N(T_W)$ and $N(T) \cap W \subseteq N(T_W)$.
+    \[
+    \therefore \ N(T_W) = N(T) \cap W
+    \]
+
+    Now, by the definition of $R(T_W)$ we have,
+    $$R(T_W) = \{T_W(x) : x \in W\}.$$
+
+    Since, $W$ is $T$-invariant then $T_W(x) = T(x)$ for $x \in W$. Thus,
+    $$R(T_W) = \{T(x) : x \in W\},$$
+    which is again the image of a set under a transformation. Thus,
+    $$\therefore \ R(T_W) = \{T(x) : x \in W\} = T(W)$$
+\end{proof}
+
+\begin{theorem}
+    Let $V$ be a finite dimensional vector space and $T:V \to V$ be linear. Then the following is true:
+    \begin{enumerate}
+        \item If $V = R(T) + N(T)$ then $V = R(T)\oplus N(T)$.
+        \item If $R(T) \cap N(T) = \{0\}$ then $V = R(T)\oplus N(T)$.
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    \begin{enumerate}
+        \item Since $V$ is finite dimensional and $R(T)$ and $N(T)$ are subspaces of $V$. Then $R(T)$ and $N(T)$ are also finite dimensional. Then, by the equation of the dimension of sum of subspaces,
+        \[
+        \dim(R(T) + N(T))=\dim(R(T))+\dim(N(T))-\dim(R(T) \cap N(T)) \tag{i}
+        \]
+        Since, $V = R(T) + N(T)$,
+        \[
+        (i) \implies \dim(V)=\dim(R(T))+\dim(N(T))-\dim(R(T) \cap N(T)) \tag{ii}
+        \]
+        On comparing equation (ii) with the equation of Rank-Nullity theorem, we get,
+        \[
+        \dim(R(T) \cap N(T)) = 0 \implies R(T) \cap N(T) = \{0\}.
+        \]
+        Thus we have, $R(T) \cap N(T) = \{0\}$ and $V = R(T) + N(T)$.
+        \[
+        \therefore \ V = R(T)\oplus N(T)
+        \]
+
+        \item Since $R(T) \cap N(T) = \{0\}$ then $\dim(R(T) \cap N(T)) = 0$. Since $V$ is finite dimensional then by Rank-Nullity Theorem,
+        \begin{align*}
+            \dim(V) &= \dim(R(T))+\dim(N(T)) \\
+            &= \dim(R(T))+\dim(N(T)) - 0 \\
+            &= \dim(R(T))+\dim(N(T)) - \dim(R(T) \cap N(T)) \tag{iii}
+        \end{align*}
+        Again since $R(T)$ and $N(T)$ are subspaces of $V$, then by the equation of dimension of subspaces,
+        \begin{equation*}
+            \dim(R(T) + N(T))=\dim(R(T))+\dim(N(T))-\dim(R(T) \cap N(T)) \tag{iv}
+        \end{equation*}
+        Comparing (iii) and (iv) we get, $\dim(V)=\dim(R(T) + N(T))$. We know for a subspace of a finite dimensional vector space that if their dimensions are equal then the spaces are equal. Thus, $V = R(T)+N(T)$ and we also have $R(T) \cap N(T) = \{0\}$.
+        \[
+        \therefore \ V = R(T) \oplus N(T)
+        \]
+    \end{enumerate}
+\end{proof}
+
+\section{Matrix Representation}
+\begin{definition}
+    Let $V$ be a finite-dimensional vector space. An ordered basis for $V$ is a basis for $V$ endowed with a specific order, \textit{i.e.}, an ordered basis for $V$ is a finite sequence of linearly independent vectors in $V$ that generates $V$.
+\end{definition}
+
+\begin{definition}
+    Let $\B = \{u_1, u_2, \ldots, u_n\}$ be an ordered basis for a finite-dimensional vector space $V$. For $x \in V$, let $a_1, a_2, \ldots, a_n$ be the unique scalars such that \[x = \sum_{i=1}^{n}a_iu_i.\] We define the coordinate vector $x$ relative to $\B$, denoted by $[x]_\B$ and
+    \[
+    [x]_\B = \left[\begin{matrix}
+        a_1 \\ a_2 \\ \ldots \\ a_n
+    \end{matrix}\right]
+    \]
+\end{definition}
+
+Suppose $V$ and $W$ be finite-dimensional vector spaces with ordered bases $\B = \{v_1, v_2, \ldots, v_n\}$ and $\C = \{w_1, w_2, \ldots, w_m\}$ respectively. Let $T:V \to W$ be linear. Then for each $j$, $1 \leq j \leq n$, there exists unique scalars $a_{ij} \in F, 1 \le i \le m$, such that
+\[
+T(v_j) = \sum_{i=1}^{m} a_{ij}w_i \quad \text{for } 1 \le j \le n.
+\]
+
+\begin{definition}
+    Using above notation, we call $m \times n$ matrix $A$ defined by $A_{ij} = a_{ij}$ the matrix representation of $T$ in the ordered bases $\B$ and $\C$ and write $A = [T]_\B^\C$. If $V=W$ and $\B=\C$, then we write $A=[T]_\B$.
+\end{definition}
+
+\begin{example}
+    Let $T:P_3(\mathbb{R}) \to P_2(\mathbb{R})$ be linear defined by $T(f(x)) = f'(x)$. Let $\B$ and $\C$ be the standard ordered bases for $P_3(\mathbb{R})$ and $P_2(\mathbb{R})$ respectively. Then, since $\B$ is a standard ordered basis for $P_3(\mathbb{R})$ then $\B = \{1,x,x^2,x^3\}$ and $\C$ is a standard ordered basis for $P_2(\mathbb{R})$ thus $\C = \{1,x,x^2\}$. Therefore,
+    \begin{align*}
+        T(1) &= 0 = 0.1+0.x+0.x^2, \\
+        T(x) &= 1 = 1.1+0.x+0.x^2, \\
+        T(x^2) &= 2x = 0.1+2.x+0.x^2, \\
+        T(x^3) &= 3x^2 = 0.1+0.x+3.x^2
+    \end{align*}
+    Hence,
+    \[
+    [T]_\B^\C = \left[
+        \begin{matrix}
+            0 & 1 & 0 & 0 \\
+            0 & 0 & 2 & 0 \\
+            0 & 0 & 0 & 3
+        \end{matrix}
+    \right]
+    \]
+\end{example}
+
+\begin{definition}
+    Let $T,U: V \to W$ be arbitrary functions, where $V$ and $W$ are vector spaces over $F$, and let $a \in F$. We define $T+U:V \to W$ by $(T+U)(x) = T(x) + U(x) \ \forall \ x \in V$ and $aT:V \to W$ by $(aT)(x) = aT(x) \ \forall \ x \in V$.
+\end{definition}
+
+\begin{theorem}
+    Let $V$ and $W$ be vector spaces over a field $F$, and let $T,U:V \to W$ be linear.
+    \begin{enumerate}
+        \item for all $a \in F, aT+U$ is linear.
+        \item Using all preceeding operations of addition and scalar multiplications, the collection of all linear transformations from $V$ to $W$ is a vector space over $F$.
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    \begin{enumerate}
+        \item For $x,y \in V$ and $c \in F$, we need to prove \[(aT+U)(cx+y) = c(aT+U)(x) + (aT+U)(y).\] Thus,
+        \begin{align*}
+            (aT+U)(cx+y) &= (aT)(cx+y) + U(cx+y) \\
+            &= a(T(cx+y)) + U(cx) + U(y) \\
+            &= a(cT(x) + T(y)) + cU(x) +U(y) \\
+            &= c(aT(x) + U(x)) + aT(y) + U(y) \\
+            &= c(aT+U)(x) + (aT+U)(y)
+        \end{align*}
+        Hence, $aT+U$ is linear for all $a \in F$.
+
+        \item Let $\LL(V,W)$ be the set of all linear transformations from $V$ to $W$.
+
+        \begin{enumerate}
+        \item If $S, T \in \LL(V,W)$ then $(S+T)(v) = S(v) + T(v) = T(v) + S(v) = (T+S)(v)$ for $v \in V$.
+        
+        \item If $R, S, T \in \LL(V,W)$ then, for $v \in V$,
+        \begin{align*}
+            ((R+S) + T)(v) &= (R+S)(v) + T(v) = R(v) + (S(v) + T(v)) \\ &= R(v) + (S+T)(v) = (R + (S+T))(v)
+        \end{align*}
+        
+        \item If $T \in \LL(V,W)$ then, let $Z \in \LL(V,W)$ such that $Z(v) = 0_W$ for all $v \in V$. Thus, $(T+Z)(v) = T(v) + Z(v) = T(v) + 0_W = T(v)$
+        
+        \item If $T \in \LL(V,W)$ such that $(-T)(v) = -T(v)$ then,
+        $$(T + (-T))(v) = T(v) + (-T)(v) = T(v) - T(v) = 0.$$
+        
+        \item If $T \in \LL(V,W)$ and $a,b \in F$ then, for $v \in V$,
+        $$(ab)(T(v)) = a(b(T(v))) = a((bT)(v)) = (a(bT))(v).$$
+        
+        \item Let $S, T \in \LL(V,W)$ and $a \in F$ then for $v \in V$,
+        $$a(S+T)(v) = a(S(v) + T(v)) = (aS)(v) + (aT)(v) = (aS + aT)(v)$$
+        
+        \item Let $T \in \LL(V,W)$ and $a,b \in F$ then for $v \in V$,
+        $$(a+b)(T(v)) = a(T(v)) + b(T(v)) = (aT)(v) + (bT)(v) = (aT + bT)(v).$$
+        
+        \item $(1T)(v) = 1 \cdot T(v) = T(v)$.
+        \end{enumerate}
+
+        Hence, $\LL(V,W)$ is a vector space over $F$.
+    \end{enumerate}
+\end{proof}
+
+\begin{definition}
+    Let $V$ and $W$ be vector spaces over a field $F$. We denote the vector space of all linear transformations from $V$ to $W$ by $\LL(V,W)$. If $V=W$, we write $\LL(V)$ instead of $\LL(V,V)$.
+\end{definition}
+
+\begin{theorem}
+    Let $V$ and $W$ be finite-dimensional vector spaces over a field $F$ with ordered bases $\B$ and $\C$ respectively, and let $T,U: V \to W$ be linear. Then,
+    \begin{enumerate}
+        \item $[T+U]_\B^\C = [T]_\B^\C + [U]_\B^\C$.
+        \item $[aT]_\B^\C = a[T]_\B^\C$ for all $a \in F$.
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    \begin{enumerate}
+        \item Let $\B = \{v_1, v_2, \dots, v_n\}$ and $\C = \{w_1, w_2, \dots, w_m\}$. There exists unique scalars $a_{ij}$ and $b_{ij}$ ($1 \le j \le n, 1 \le i \le m$) such that
+        $$T(v_j) = \sum_{i=1}^{m} a_{ij} w_i \quad \text{ and } \quad U(v_j) = \sum_{i=1}^{m} b_{ij} w_i \quad \text{ for } 1 \le j \le n$$
+
+        We know,
+        $$(T+U)(v_j) = T(v_j) + U(v_j) = \sum_{i=1}^{m} a_{ij} w_i + \sum_{i=1}^{m} b_{ij} w_i$$
+        $$= \sum_{i=1}^{m} (a_{ij} + b_{ij}) w_i$$
+
+        Hence, $\left([T+U]_\B^\C\right)_{ij} = a_{ij} + b_{ij} = \left([T]_\B^\C\right)_{ij} + \left([U]_\B^\C\right)_{ij}.$
+
+        \item Let $\B = \{v_1, v_2, \dots, v_n\}$ and $\C = \{w_1, w_2, \dots, w_m\}$. There exists unique scalars $a_{ij}$ ($1 \le j \le n, 1 \le i \le m$) such that
+        $$T(v_j) = \sum_{i=1}^{m} a_{ij} w_i \quad \text{ for } 1 \le j \le n$$
+        Let $d$ be any scalar. Then,
+        $$(dT)(v_j) = d \ T(v_j) = d \left( \sum_{i=1}^{m} a_{ij} w_i \right) = \sum_{i=1}^{m} (da_{ij}) w_i.$$
+
+        Thus,
+        $$[dT]_\B^\C = d a_{ij} = d \cdot [T]_\B^\C$$
+    \end{enumerate}
+\end{proof}
+
+\begin{theorem}
+    Let $V$ and $W$ be vector spaces, and let $S$ be a subset of $V$. Define $S^0 = \{T \in \LL(V,W) : T(x) = 0 \ \forall \ x \in S\}$ then
+    \begin{enumerate}
+    \item $S^0$ is a subspace of $\LL(V,W)$.
+    \item If $S_1, S_2 \subseteq V$ and $S_1 \subseteq S_2$, then $S_2^0 \subseteq S_1^0$
+    \item If $V_1$ and $V_2$ are subspaces of $V$, then $(V_1 + V_2)^0 = V_1^0 \cap V_2^0$.
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    \begin{enumerate}
+        \item Let, $0$ be the zero transformation of $\LL(V,W)$. By definition of zero transformation, $0(x) = 0$ for all $x \in V$. Since $S \subseteq V$ then for all $x \in S$, $0(x) = 0$. Thus, $0 \in S^0$.
+
+        Again let $T_1, T_2 \in S^0$ then $T_1 \in \LL(V,W)$ and $T_1(x) = 0 \ \forall \ x \in S$ and $T_2 \in \LL(V,W)$ and $T_2(x) = 0 \ \forall \ x \in S$. Now,
+        $$(T_1 + T_2)(x) = T_1(x) + T_2(x) = 0 + 0 = 0 \ \forall \ x \in S$$
+
+        Thus, $T_1 + T_2 \in S^0$ and for any scalar $a$,
+        $$(a T_1)(x) = a(T_1(x)) = a \times 0 = 0 \ \forall \ x \in S,$$
+        $a T_1 \in S^0$. Hence $S^0$ is a subspace of $\LL(V,W)$.
+
+        \item Let, $S_2^0 \not\subseteq S_1^0$ then $\exists \ T \in S_2^0$ such that $T \not\in S_1^0$. Since $T \not\in S_1^0$, this means $\exists$ atleast one $x \in S_1$ such that $T(x) \neq 0$. But $S_1 \subseteq S_2$ which means that one $x$ exists in $S_2$ such that $T(x) \neq 0$. Thus, $T \not\in S_2^0$ which leads to a contradiction. Thus our assumption $S_2^0 \not\subseteq S_1^0$ is false and hence, $S_2^0 \subseteq S_1^0$.
+        
+        \item Proving $(V_1 + V_2)^0 \subseteq V_1^0 \cap V_2^0$:
+
+        Since $V_1$ and $V_2$ are subspaces of $V$ then we know $V_1 + V_2$ is a subspace and $V_1 \subseteq V_1 + V_2$ and $V_2 \subseteq V_1 + V_2$. From part (2), we have,
+        $$(V_1 + V_2)^0 \subseteq V_1^0 \text{ and } (V_1 + V_2)^0 \subseteq V_2^0$$
+        and thus,
+        $$(V_1 + V_2)^0 \subseteq V_1^0 \cap V_2^0.$$
+
+        Proving $V_1^0 \cap V_2^0 \subseteq (V_1 + V_2)^0$:
+
+        Let $T \in V_1^0 \cap V_2^0$ then $T \in V_1^0$ and $T \in V_2^0$ and,
+        $$T \in \LL(V,W) \text{ and } T(x) = 0 \ \forall \ x \in V_1 \text{ and } T(y) = 0 \ \forall \ y \in V_2.$$
+
+        Again, $V_1 + V_2$ is a subspace of $V$ and if $v \in V_1 + V_2$ then $v = v_1 + v_2$ where $v_1 \in V_1$ and $v_2 \in V_2$ and applying transformations, we get,
+        $$T(v) = T(v_1) + T(v_2) = 0 + 0 = 0 \quad [\because v_1 \in V_1 \text{ and } v_2 \in V_2].$$
+
+        Thus for all $v \in V_1 + V_2$, $T(v) = 0$. Therefore, $T \in (V_1 + V_2)^0$.
+        Hence, $V_1^0 \cap V_2^0 \subseteq (V_1 + V_2)^0$
+        $$\therefore \ (V_1 + V_2)^0 = V_1^0 \cap V_2^0$$
+    \end{enumerate}
+\end{proof}
+
+\section{Conclusion}
+In this chapter, we have defined linear transformations and explored their properties. We have also discussed the concepts of kernel and image of a linear transformation, and proved the Rank-Nullity Theorem. Finally, we have introduced the concept of matrix representation of linear transformations and shown how to perform operations on linear transformations using their matrix representations.
+
+\begin{thebibliography}{9}
+    \bibitem{fis_linear_algebra}
+    Friedberg, S. H., Insel, A. J., \& Spence, L. E. (2018). \textit{Linear Algebra} (5th ed.). Pearson.
+\end{thebibliography}
+\end{document}
