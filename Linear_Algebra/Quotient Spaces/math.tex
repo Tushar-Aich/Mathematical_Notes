@@ -1,0 +1,386 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsfonts, amsmath, amssymb, amsthm}
+\usepackage{geometry}
+\usepackage[hidelinks]{hyperref}
+\usepackage[none]{hyphenat}
+\usepackage{setspace}
+\usepackage{float}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{cleveref}
+\usepackage{tikz}
+\usepackage{mathrsfs}
+
+\geometry{a4paper, left=0.5in, top=0.5in, right=0.5in, bottom=0.7in}
+\onehalfspacing
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{example}{Example}[section]
+\theoremstyle{remark}
+\newtheorem*{remark}{\textbf{Remark}}
+
+\newcommand{\e}{\varepsilon}
+\newcommand{\st}{\text{ such that }}
+\newcommand{\B}{\mathscr{B}}
+\DeclareMathOperator{\Span}{span}
+\DeclareMathOperator{\nullity}{nullity}
+\DeclareMathOperator{\rank}{rank}
+
+\hyphenpenalty=10000
+\exhyphenpenalty=10000
+
+\title{\textbf{\Large The Quotient Structure in Linear Algebra\\ \large A Geometric Approach to Cosets and Quotient Linear Structure}}
+\author{\textbf{Tushar Kumar Aich}}
+\date{\today}
+
+\begin{document}
+	\maketitle
+	
+	\begin{abstract}
+		This paper explores the rigorous approach to a very beautiful topic in linear algebra, that is, quotient spaces. Beginning with the algebraic and geometric study of cosets relative to a subspace $W$ of a vector space $V$. Then we define the necessary framework to define the collection of cosets $V/W$ as a well defined vector space. We then analyze and rigorously study the dimensionality theorem of the quotient space. And finally we study the linear transformation from a vector space $V$ to its quotient space relative to its subspace $W$.
+	\end{abstract}
+	
+	\section{Introduction}
+	In Linear Algebra, we often study a vector space by analyzing its internal components, namely its subspaces but in this paper we take a different approach, we study the same vector space from the perspective of its subspace. Here instead of treating the subspace as a collection of vectors, the quotient structure crushes the whole subspace to a single point-the zero vector of new vector space-and reorganizes the remainder of the vector space around this collapse. But first we start with a definition of coset and build slowly from that.
+	
+	\begin{definition}
+		If $W$ is a subspace of a vector space $V$ over a field $F$ then for any $v \in V$ the set 
+		\[
+		\{v\}+W = \{v+w : w \in W\}
+		\]
+		is called the coset of $W$ containing $V$. We will be denoting this coset by $v+W$ instead of $\{v\}+W$.
+	\end{definition}
+	
+	Throughout the paper we will be assuming $V$ as our vector and $W$ as our subspace with respect to $V$.
+	
+	\section{Quotient Space}
+	\begin{theorem}
+		$v+W$ is a subspace if and only if $v \in W$.
+	\end{theorem}
+	
+	\begin{proof}
+		Let $v+w$ be a subspace. Then $0 \in v+W$. Thus from the definition of coset we can write $0 = v+w$ such that $w \in W$. So, $v=-w$. Since $W$ is a subspace, then for any $w \in W$, $-w \in W$. Hence $v \in W$.
+		
+		Conversely let us assume $v \in W$. Now if we assume any $u \in v+W$ then from the definition of coset we can write $u = v+w$ such that $w \in W$. Since $W$ is a subspace then it is closed under addition. Thus $v+w=u \in W$. Therefore, $v+W \subseteq W$.
+		
+		Again, let $y \in W$. We can express $y = v + (y - v)$. Since $W$ is a subspace and $y, v \in W$. Thus $y - v \in W$. Here we can express $y-v = w' \st w' \in W$. By the definition of coset we can write, $y = v+w' \in v+W \st w' \in W$. Therefore $W \subseteq v+W$.
+		
+		Thus, $v+W = W$. Since $W$ is a subspace, then $v+W$ is also a subspace.
+	\end{proof}
+	
+	\begin{theorem}
+		For any $v_1, v_2 \in V$, $v_1 + W = v_2 + W$ if and only if $v_1 - v_2 \in W$.
+	\end{theorem}
+	
+	\begin{proof}
+		Let us assume $v_1 + W = v_2 + W$. Let $u_1 \in v_1 + W$. Then by the definition of coset, we can write $u_1 = v_1 + w_1 \st w_1 \in W$. Since the two sets are equal, then $u_1 \in v_2 + W$. Again by definition, $u_1 = v_2 + w_2 \st w_2 \in W$. Thus,
+		\begin{align*}
+			v_1 + w_1 &= v_2 + w_2 \\
+			\implies v_1 - v_2 &= w_2 - w_1
+		\end{align*}
+		Now, since $W$ is a subspace, then for any $w_1, w_2 \in W$, we can write $w_2 - w_1 = v_1 - v_2 \in W$.
+		
+		conversely, let us assume $v_1-v_2 \in W$.
+		
+		\vspace{0.3cm}
+		
+		\noindent \textbf{Part A: Proving $v_1+W \subseteq v_2+W$}:
+		
+		\vspace{0.3cm}
+		
+		\noindent Let $x \in v_1 + W$, then by the definition of coset, we can write $x = v_1 + w_1 \st w_1 \in W$. We can rewrite $x = v_2 + [(v_1-v_2)+w_1]$. Since $W$ is a subspace, $(v_1-v_2)+w_1 \in W$. If we take $w_1' = (v_1-v_2)+w_1, \text{ then } x = v_2+w_1' \st w_1' \in W$. Thus, $x \in v_2+W$. Hence, $v_1+W \subseteq v_2+W$.
+		
+		\vspace{0.3cm}
+		
+		\noindent \textbf{Part B: Proving $v_2+W \subseteq v_1+W$}:
+		
+		\vspace{0.3cm}
+		
+		\noindent Since $W$ is a subspace then $-(v_1-v_2) = v_2-v_1 \in W$. If we take $y \in v_2+W$ then similarly we can prove $v_2+W \subseteq v_1+W$.
+		
+		\[
+		\therefore \ v_1 + W = v_2 + W.
+		\]
+	\end{proof}
+	
+	\noindent Addition and scalar multiplication by scalars of a field $F$ can be defined in the collection
+	\[
+	S = \{v+W : v \in V\}
+	\]
+	of all cosets of $W$ as follows:
+	\begin{enumerate}
+		\item $(v_1+W)+(v_2+W) = (v_1+v_2)+W \quad \forall \ v_1, v_2 \in V$.
+		\item $a(v+W) = av+W \quad \forall \ a \in F \text{ and } v \in V$.
+	\end{enumerate}
+	
+	\begin{theorem}
+		If $v_1+W=v_1'+W$ and $v_2+W=v_2'+W$ then
+		\[
+		(v_1+W)+(v_2+W) = (v_1'+W)+(v_2'+W).
+		\]
+		and
+		\[
+		a(v_1+W) = a(v_1'+W) \quad \forall \ a \in F.
+		\]
+	\end{theorem}
+	
+	\begin{proof}
+		\textbf{Proving $(v_1+W)+(v_2+W) = (v_1'+W)+(v_2'+W)$:}
+		
+		\vspace{0.3cm}
+		
+		\noindent We have 
+		\[
+		v_1+W=v_1'+W \quad \text{and} \quad v_2+W=v_2'+W
+		\]
+		then from Theorem 2.2 we can write
+		\[
+		v_1 - v_1' \in W \quad \text{and} \quad v_2 - v_2' \in W
+		\]
+		Since $W$ is a subspace then it is closed under addition. Thus
+		\[
+		(v_1 - v_1') + (v_2 - v_2') = (v_1 + v_2) - (v_1' + v_2') \in W
+		\]
+		Again using Theorem 2.2,
+		\[
+		(v_1+v_2)+W = (v_1'+v_2')+W.
+		\]
+		Again using the addition of cosets mentioned above we can write,
+		\[
+		(v_1+W)+(v_2+W) = (v_1'+W)+(v_2'+W).
+		\]
+		
+		\vspace{0.3cm}
+		
+		\noindent \textbf{Proving $a(v_1+W) = a(v_1'+W)$ for all $a \in F$:}
+		
+		\vspace{0.3cm}
+		
+		\noindent From above we have\[v_1 - v_1' \in W.\]Also since $W$ is a subspace then
+		\[
+		a(v_1 - v_1') = av_1 - av_1' \in W \quad \forall \ a \in F.
+		\]
+		Again using Theorem 2.2,
+		\[
+		av_1+W = av_1'+W.
+		\]
+		Now using the scalar multiplication of cosets mentioned above we can write,
+		\[
+		a(v_1+W) = a(v_1'+W) \quad \forall \ a \in F.
+		\]
+	\end{proof}
+	
+	\begin{theorem}
+		If $S$ is a collection of cosets with the operations defined above then $S$ is a vector space.
+	\end{theorem}
+	
+	\begin{proof}
+		We have \[S = \{v+W:v \in V\}\] the collection of cosets following the operations:
+		\begin{enumerate}
+			\item $(v_1+W)+(v_2+W) = (v_1+v_2)+W \quad \forall \ v_1, v_2 \in V$.
+			\item $a(v+W) = av+W \quad \forall \ a \in F \text{ and } v \in V$.
+		\end{enumerate}
+		
+		\vspace{0.3cm}
+		
+		\noindent \textbf{Proving $S$ is a vector space:}
+		
+		\noindent \begin{enumerate}[label=(\alph*).]
+			\item Let $u_1, u_2 \in S$ then $u_i = v_i + W \st v_i \in W$ for $i=1,2$. Then,
+			\begin{align*}
+				u_1 + u_2 &= (v_1 + W)+(v_2 + W)\\
+				&= (v_1+v_2)+W \quad [\text{using } (1)]
+			\end{align*}
+			Since $V$ is a vector space then for any $v_1, v_2 \in V$, $v_1+v_2 = v_2+v_1$.Thus,
+			\begin{align*}
+				&= (v_2+v_1)+W \\
+				&= (v_2 + W)+(v_1 + W)\\
+				&= u_2 + u_1
+			\end{align*}
+			
+			\item Let $u_1, u_2, u_3 \in S$ then $u_i = v_i+W \st v_i \in V$ for $i=1,2,3$. Then,
+			\begin{align*}
+				(u_1+u_2)+u_3 &= [(v_1+W) + (v_2+W)] + (v_3+W) \\
+				&= [(v_1+v_2)+W] + (v_3+W) \quad [\text{using } (1)]
+			\end{align*}
+			Since, $V$ is a vector space, then $v_1, v_2 \in V$, $v_1+v_2 \in V$
+			\begin{align*}
+				&= [(v_1+v_2)+v_3]+W \quad [\text{using } (1)]
+			\end{align*}
+			Also, for $v_1, v_2, v_3 \in V$, $(v_1+v_2)+v_3 = v_1+(v_2+v_3)$
+			\begin{align*}
+				&= [v_1+(v_2+v_3)]+W \\
+				&= (v_1+W) + [(v_2+W) + (v_3+W)] \quad [\text{using } (1)] \\
+				&= u_1 + (u_2+u_3)
+			\end{align*}
+			
+			\item Let $u \in S$ then $u = v+W \st v \in V$. Since, $0 \in V$, we can rewrite and use (1), $v+W = (v+0)+W = (v+W)+(0+W)$. If we take $u' = 0+W \st 0 \in V$ then, $u+u' = u$. Thus $u' = 0+W = W$ acts as our additive identity.
+			
+			\item Let $u \in S$ then $u = v+W \st v \in V$. Since $v \in V$ then $-v \in V$.
+			Thus we can have $(-v)+W \in S \st -v \in V$.
+			Now,
+			\[ (v+W) + (-v+W) = (v-v)+W = 0+W = W \quad [\text{using } (1)] \]
+			Thus, $u + (-v+W) = W$.
+			Since, $W$ acts as our additive identity, thus $(-v+W)$ is a valid additive inverse.
+			
+			\item Let $u \in S$ then $u = v+W \st v \in V$. If we consider $1 \in F$ then,
+			\[ 1(v+W) = 1(v) + W = v+W \quad [\text{using } (2)] \]
+			
+			\item Let $u \in S$ then $u = v+W \st v \in V$. If $a, b \in F$ then $ab \in F$.
+			Then, $ab(v+W) = ab(v) + W$ [using (2)].
+			Also, $a[b(v+W)] = a[b(v)+W]$. Since, $v \in V$ then $bv \in V$ for any $b \in F$.
+			Then, $a[b(v)+W] = a(b(v)) + W$. Thus, $ab(v+W) = a[b(v+W)]$.
+			
+			\item Let $u_1, u_2 \in S$ then $u_i = v_i+W \st v_i \in V$ for $i=1,2$. Then,
+			\[ u_1+u_2 = (v_1+W) + (v_2+W) = (v_1+v_2)+W \quad [\text{using } (1)] \]
+			Then for any $a \in F$, $a(u_1+u_2) = a[(v_1+v_2)+W] = a(v_1+v_2)+W$ [using (2)].
+			Since, $v_1, v_2 \in V$ then $a(v_1+v_2) = av_1+av_2$ for any $a \in F$.
+			Thus,
+			\begin{align*}
+				a(u_1+u_2) &= (av_1+av_2)+W \\
+				&= (av_1+W) + (av_2+W) \\
+				&= a(v_1+W) + a(v_2+W) \\
+				&= au_1 + au_2
+			\end{align*}
+			
+			\item Let $a, b \in F$ and $u \in S$ then $u = v+W \st v \in V$. Then $(a+b) \in F$ and
+			\[ (a+b)u = (a+b)(v+W) = (a+b)v + W \quad [\text{using } (2)] \]
+			Since, $v \in V$ and $a,b \in F$
+			Then,
+			\begin{align*}
+				(a+b)u &= (a+b)v+W \\
+				&= (av+bv)+W \\
+				&= av+W + bv+W \\
+				&= a(v+W) + b(v+W) \\
+				&= au + bu
+			\end{align*}
+		\end{enumerate}
+		Thus $S$ satisfies all 8 axioms. Hence, $S$ is a vector space.
+	\end{proof}
+	
+	\begin{remark}
+		The vector space $S$ is called the quotient space of $V$ modulo $W$ and is denoted by $V/W$.
+	\end{remark}
+	
+	Now let us study the dimensions of the quotient space of $V$ modulo $W$ with respect to $V$ and $W$.
+	
+	\begin{theorem}
+		If $\B =\{u_1, u_2, \ldots, u_k\}$ is a basis for $W$ and we know that any basis for $W$ can be extended to a basis for $V$ say $\B_1 = \{u_1, u_2, \ldots, u_k, u_{k+1}, \ldots, u_n\}$ then $\{u_{k+1}+W, u_{k+2}+W, \ldots, u_n+W\}$ is a basis for $V/W$.
+	\end{theorem}
+	
+	\begin{proof}		
+		Let $\B' = \{u_{k+1}+W, u_{k+2}+W, \dots, u_n+W\}$ then we need to prove that $\B'$ is a basis for $V/W$.
+		
+		\vspace{0.3cm}
+		
+		\noindent \textbf{Proving $\Span(\B') \subseteq V/W$:}
+		
+		\vspace{0.3cm}
+		
+		\noindent Since $\B'$ is a collection of cosets of $W$. Thus, $\B' \subseteq V/W$. Hence, $\Span(\B') \subseteq V/W$.
+		
+		\vspace{0.3cm}
+		
+		\noindent \textbf{Proving $V/W \subseteq \Span(\B')$:}
+		
+		\vspace{0.3cm}
+		
+		\noindent Let $x \in V/W$ then $x = v+W$ for $v \in V$. Since $\B_1$ is a basis for $V$. Then, 
+		\[ x = \left(\sum_{i=1}^k a_iu_i + \sum_{i=k+1}^n a_iu_i\right) + W \quad \text{for } u_i \in V \text{ and } a_i \in F. \]
+		
+		Since, 
+		\[ (v_1+v_2)+W = (v_1+W) + (v_2+W) \quad \text{for } v_1, v_2 \in V. \]
+		
+		Then,
+		\[ x = \left(\sum_{i=1}^k a_iu_i + W\right) + \left(\sum_{i=k+1}^n a_iu_i + W\right) \]
+		
+		Since, $\B$ is a basis for $W$. Thus, $\displaystyle\sum_{i=1}^k a_iu_i \in W$. Hence,
+		\[ x = W + \left(\sum_{i=k+1}^n a_iu_i + W\right) \]
+		
+		Since, $W$ is our zero vector in $V/W$. Thus,
+		\[ x = \sum_{i=k+1}^n a_iu_i + W. \]
+		
+		Thus, $x \in \Span(\B')$. Therefore, $V/W \subseteq \Span(\B')$. \\
+		Hence, 
+		\[ \Span(\B') = V/W. \]
+		
+		\vspace{0.3cm}
+		
+		\noindent \textbf{Proving $\B' \subseteq V/W$ is linearly independent:}
+		
+		\vspace{0.3cm}
+		
+		\noindent Let the linear combination of $\B'$ be $0_{V/W}$.
+		\begin{align*}
+			\therefore \quad & \sum_{i=k+1}^n a_i(u_i+W) = 0_{V/W} \\
+			\Rightarrow \quad & \sum_{i=k+1}^n a_iu_i + W = W \\
+			\Rightarrow \quad & \sum_{i=k+1}^n a_iu_i = 0 \\
+			\Rightarrow \quad & \sum_{i=1}^n a_iu_i - \sum_{i=1}^k a_iu_i = 0.
+		\end{align*}
+		
+		Since, $\B$ and $\B_1$ are basis for $W$ \& $V$ respectively. Thus, $a_i = 0$ for all $i$. Thus, $\B'$ is linearly independent. Hence, $\B'$ is a basis for $V/W$.
+	\end{proof}
+	
+	\begin{remark}
+		Now we have $\dim(V) = n \text{ and } \dim(W) = k$. Since $\B'$ is a basis for $V/W$ thus,
+		\[
+		\dim(V/W) = n - k = \dim(V) - \dim(W).
+		\]
+	\end{remark}
+	
+	Now we will study about a linear transformation on our defined quotient space $V/W$.
+	
+	\begin{theorem}
+		Let us define a mapping $\eta : V \to V/W$ by $\eta(v) = v+W$ for $v \in V$ then $\eta$ is a linear transformation and $N(\eta) = W$
+	\end{theorem}
+	
+	\begin{proof}
+		Let $v_1, v_2 \in V$ and $a \in F$. We need to prove 
+		\[ \eta(av_1 + v_2) = a\eta(v_1) + \eta(v_2). \]
+		Here,
+		\[ \eta(av_1+v_2) = (av_1+v_2)+W. \]
+		Since, $(v_1+v_2)+W = (v_1+W) + (v_2+W)$ and $av_1+W = a(v_1+W)$. Then,
+		\begin{align*}
+			\eta(av_1+v_2) &= (av_1+v_2)+W = a(v_1+W) + (v_2+W) \\
+			&= a\eta(v_1) + \eta(v_2).
+		\end{align*}
+		Thus, $\eta$ is linear.
+		
+		Again, we know $N(\eta) = \{v \in V : \eta(v) = W\}$. Let $x$ be an arbitrary vector in $N(\eta)$ then $\eta(x) = W$. By the definition of $\eta(x)$,
+		\[ x+W = W \]
+		which is possible if and only if $x \in W$. Thus, $N(\eta) \subseteq W$.
+		
+		Conversely, let $x \in W$ then by the properties of subspace, adding an element of the subspace to the entire subspace gives the subspace itself. Therefore $x+W = W$. By the definition of $\eta(x)$, $\eta(x) = W$. Since $W$ is the zero vector of $V/W$ vector space. Thus, $x \in N(\eta)$ and $W \subseteq N(\eta)$.
+		
+		Hence, $N(\eta) = W$.
+	\end{proof}
+	
+	From here we can find another way to deduce the dimensionality formula of the quotient space. If we again define the mapping $\eta : V \to V/W$ by $\eta(v) = v+W$ for $v \in V$, then above we proved that $\eta$ is linear and that $N(\eta) = W$. Now if we let $x \in V/W$ then $x = v + W$ for $v \in V$ which is also the output of our transformation $\eta(v)$. Thus $x \in R(\eta)$. Hence $V/W \subseteq R(\eta)$. Again since $R(\eta)$ is a subspace of $V/W$. Thus $R(\eta) = V/W$. Hence $R(\eta) = V/W$.
+	
+	Now by Rank-Nullity theorem we have
+	\[
+	\dim(V) = \dim(N(\eta)) + \dim(R(\eta))
+	\]
+	From above we can rewrite our equation as
+	\begin{align*}
+		\dim(V) &= \dim(W) + \dim(V/W) \\
+		\implies \dim(V/W) &= \dim(V) - \dim(W).
+	\end{align*}
+	
+	\vspace{0.5cm}
+	
+	\section{Conclusion}
+	The systematic construction of the quotient space $V/W$ and its induced operators provides the exact machinery necessary to resolve one of the most fundamental problems in linear algebra: non-invertibility. When a linear transformation possesses a non-trivial kernel, it loses information and cannot be inverted. However, by passing to the quotient space and collapsing that very kernel to zero, we eliminate the redundancy that prevents bijectivity. The foundations laid in this paper regarding coset dynamics and dimension counts serve as the direct precursor to the First Isomorphism Theorem. This upcoming framework will demonstrate that every linear mapping contains a hidden, perfectly invertible core, proving that the quotient space is the natural domain for restoring complete algebraic invertibility.
+	
+	\begin{thebibliography}{9}
+		\bibitem{fis_linear_algebra}
+		Friedberg, S. H., Insel, A. J., \& Spence, L. E. (2018). \textit{Linear Algebra} (5th ed.). Pearson.
+	\end{thebibliography}
+\end{document}
